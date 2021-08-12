@@ -12,8 +12,9 @@ module.exports = function(config) {
 	const gulpConfig = config ? {...defaultConfig, ...config} : defaultConfig;
 	
 	const assets = require('./assets')(gulpConfig);
+	const icons = require('./icons')(gulpConfig);
 
-	return assets;
+	return {...assets, ...icons};
   };
 
 

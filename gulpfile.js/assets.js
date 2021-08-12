@@ -208,27 +208,4 @@ module.exports = function(config) {
 	return ret;
 
 }
-// if (shutConfig.isRtl) {
-// 	// produces both rtl and ltr
-// 	exports.rawless = gulp.series(rawless, rawMirror);
-// 	exports.buildcss = gulp.parallel(buildcss, buildRtlcss);
-
-// 	exports.watch = function () {
-// 		// place code for your default task here
-// 		gulp.watch('**/less/(sh|ui|rtl){1}\.*.less', { ignoreInitial: false }, gulp.series(rawless, rawMirror));
-
-// 	}
-// 	exports.critical = gulp.series(rawNonCritical, rawCritical, rawNonCriticalRtl, rawCriticalRtl);
-
-// } else {
-
-// 	exports.rawless = rawless;
-// 	exports.buildcss = buildcss;
-// 	exports.watch = function () {
-// 		// place code for your default task here
-// 		gulp.watch('**/less/(sh|ui){1}\.*.less', { ignoreInitial: false }, rawless);
-
-// 	}
-// 	exports.critical = gulp.series(rawNonCritical, rawCritical);
-// }
 
