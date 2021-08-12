@@ -1,0 +1,13 @@
+{
+    "shutUrl": "./src/",
+	"srcUrl": "./minisite/src/",
+	"distUrl": "./minisite/src/",
+    "minDistUrl": "./minisite/public/",
+    "iconfontspath": "./fontfiles/fonts/",
+    "shutDistUrl": "./dist/",
+    "projectName": "sh",
+    "isRtl": true,
+    "browserslist": [
+        "> 6%"
+      ]
+}
