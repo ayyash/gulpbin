@@ -11,8 +11,10 @@ const  inject = require('gulp-inject');
 const  rename = require('gulp-rename');
 const  replace = require('gulp-replace');
 const  gulpif = require('gulp-if');
-const  gulpConfig = require('../config.json');
 const angularTemplates = '/angulartemplates/';
+
+let  gulpConfig = require('../config.json');
+
 
 const ngConfig = {
     Templates: {
@@ -426,6 +428,11 @@ const _addToConfig = function(){
 
 // TODO: create guard and resolve
 
+
+exports.config =  function(config) {
+	gulpConfig = config;
+};
+
 exports.injectComponents = _injectComponents;
 exports.injectServices = _injectServices;
 exports.injectLibModule = _injectLibModule;
@@ -452,4 +459,5 @@ exports.createDirective = gulp.series(_createDirective, _injectLibModule);
 exports.createModel = gulp.series(_createModel, _injectModels);
 exports.createService = gulp.series(_createService, _injectServices);
 exports.createFullService = gulp.series(gulp.parallel(_createModel, _createService, _addToConfig), _injectModels, _injectServices);
+
 

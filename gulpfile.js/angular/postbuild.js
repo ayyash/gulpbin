@@ -8,7 +8,12 @@ const rename = require('gulp-rename');
 const transform = require('gulp-transform');
 
 
-const gulpConfig = require('./config.json');
+let gulpConfig = require('../config.json');
+
+
+exports.config =  function(config) {
+	gulpConfig = config;
+};
 
 const _config = {
     index: {

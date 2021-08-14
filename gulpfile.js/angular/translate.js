@@ -2,7 +2,12 @@ const gulp = require('gulp');
 const inject = require('gulp-inject');
 
 
-const gulpConfig = require('./config.json');
+let gulpConfig = require('../config.json');
+
+exports.config =  function(config) {
+	gulpConfig = config;
+};
+
 const _config = {
     Sources: './src/app/components/**/*.html',
     Destination: './src/locale/'

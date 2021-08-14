@@ -1,13 +1,27 @@
 {
-    "shutUrl": "./src/",
+	"shutUrl": "./node_modules/shut/src/",
 	"srcUrl": "./minisite/src/",
-	"distUrl": "./minisite/src/",
-    "minDistUrl": "./minisite/public/",
-    "iconfontspath": "./fontfiles/fonts/",
-    "shutDistUrl": "./dist/",
-    "projectName": "sh",
-    "isRtl": true,
-    "browserslist": [
-        "> 6%"
-      ]
+	"distUrl": "./minisite/src/assets/",
+	"minDistUrl": "./minisite/public/",
+	"iconfontspath": "./fontfiles/fonts/",
+	"shutDistUrl": "./dist/",
+	"projectName": "sh",
+	"isRtl": true,
+	"browserslist": [
+		"> 6%"
+	],
+	"appUrl": "./src/app/",
+	"hostUrl": "./host/",
+	"angularPrefix": "cr",
+	"isUrlBased": true,
+	"languages": [
+		{
+			"name": "en",
+			"isRtl": false
+		},
+		{
+			"name": "ar",
+			"isRtl": true
+		}
+	]
 }
