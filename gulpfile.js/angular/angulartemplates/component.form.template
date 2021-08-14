@@ -1,0 +1,61 @@
+import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { IViewMode} from '../../core/services';
+import { Toast } from '../../lib/toast';
+
+
+@Component({
+    _selector_
+    templateUrl: './viewpath.html',
+    changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class MajorNamePartialComponent implements OnInit {
+
+    // Add types
+    @Input() mode: IViewMode = {forNew: true};
+
+    @Output() onSave: EventEmitter<any> = new EventEmitter<any>();
+    @Output() onCancel: EventEmitter<void> = new EventEmitter();
+
+    forceValidation = false;
+    majorForm: FormGroup;
+
+    constructor(private fb: FormBuilder, private toast: Toast) {
+        //
+    }
+    ngOnInit(): void {
+        //
+        this.majorForm = this.fb.group({
+            fieldname: [],
+            fieldgroup: this.fb.group({
+                fieldname: []
+            }),
+            list: []
+        });
+    }
+
+    // use to compare for initial select... keep '=='
+    compareFn(c1: any, c2: any): boolean {
+        // tslint:disable-next-line:triple-equals
+        return c1 && c2 ? c1.id == c2.id : false;
+    }
+
+    saveMajor(): void {
+        this.forceValidation = false;
+        this.toast.Hide();
+
+
+        if (this.majorForm.valid) {
+            // clone into a new object
+            const _value = this.majorForm.value;
+
+            const _major = { ..._value};
+
+            // then emit
+            this.onSave.emit(_major);
+        } else {
+            this.forceValidation = true;
+            this.toast.Show('INVALID_FORM', { sticky: false, extracss: 'error' });
+        }
+    }
+}

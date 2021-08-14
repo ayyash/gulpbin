@@ -1,0 +1,80 @@
+import { Injectable } from '@angular/core';
+import { Config } from '../config';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { GetParamsAsString } from '../core/common';
+import { I_Name_, _Name_, IListOptions, IList, ListOptions } from '../core/services';
+
+
+
+@Injectable({providedIn: 'root'})
+export class _Name_Service {
+
+    private _listUrl = Config.API._name_.list;
+    private _detailsUrl = Config.API._name_.details;
+    private _createUrl = Config.API._name_.create;
+    private _saveUrl = Config.API._name_.save;
+    private _deleteUrl = Config.API._name_.delete;
+
+    constructor(private _http: HttpClient) {
+
+    }
+
+    Get_Name_s(options: IListOptions = {}): Observable<IList<I_Name_>> {
+        const params = GetParamsAsString(ListOptions.MapSearchListOptions(options));
+        const _url = this._listUrl.replace(':options', params);
+
+        return this._http.get(_url).pipe(
+            map(response => {
+                return _Name_.NewList(<any>response);
+            })
+        );
+    }
+
+
+    Get_Name_(id: string): Observable<I_Name_> {
+        const _url = this._detailsUrl.replace(':id', id);
+        return this._http.get(_url).pipe(
+            map(response => {
+                return _Name_.NewInstance(response);
+            })
+        );
+
+    }
+
+    Create_Name_(_name_: I_Name_): Observable<I_Name_> {
+        const _url = this._createUrl;
+        const data = _Name_.PrepCreate(_name_);
+        _debug(data, 'Create_Name_ data');
+
+        return this._http.post(_url, data).pipe(
+            map(response => {
+                return _Name_.NewInstance(<any>response);
+            })
+        );
+    }
+
+    Save_Name_(_name_: I_Name_): Observable<I_Name_> {
+        const _url = this._saveUrl.replace(':id', _name_.id);
+        const data = _Name_.PrepSave(_name_);
+        _debug(data, 'Save_Name_ data');
+
+        return this._http.put(_url, data).pipe(
+            map(response => {
+                return _name_;
+            })
+        );
+    }
+
+    Delete_Name_(_name_: I_Name_): Observable<boolean> {
+        const _url = this._deleteUrl.replace(':id', _name_.id);
+
+        return this._http.delete(_url).pipe(
+            map(response => {
+                return true;
+            })
+        );
+    }
+
+}

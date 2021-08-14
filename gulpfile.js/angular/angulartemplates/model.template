@@ -1,0 +1,47 @@
+import { DataList, IList } from '../core/services';
+
+export interface I_Name_ {
+    id: string;
+
+}
+
+export class _Name_ implements I_Name_ {
+    constructor(
+        public id: string
+    ) {
+
+    }
+
+    public static NewInstance(_name_: any): I_Name_ {
+        return new _Name_(
+            _name_.id
+        );
+    }
+    public static NewInstances(_name_s: any[]): I_Name_[] {
+        return _name_s.map(_Name_.NewInstance);
+    }
+    public static NewList(dataset: any): IList<I_Name_> {
+        const dl = new DataList<I_Name_>();
+        dl.mapper = _Name_.NewInstance;
+        return dl.NewDataList(dataset);
+
+    }
+
+    // prepare to POST
+    public static PrepCreate(_name_: I_Name_): any {
+        return {
+            id: _name_.id
+        };
+
+    }
+    // prepare to PUT
+    public static PrepSave(_name_: I_Name_): any {
+
+        return {
+           id: _name_.id
+
+        };
+
+    }
+
+}

@@ -1,0 +1,19 @@
+import { NgModule } from '@angular/core';
+import { SharedModule } from '../core/shared.module';
+import { RouterModule } from '@angular/router';
+import * as CoreComponents from '../core/components';
+
+@NgModule({
+    imports: [
+        SharedModule,
+        RouterModule
+    ],
+    declarations: [
+         // **gulpcomponent_first**
+    ],
+    exports: [
+        // **gulpcomponent_first**
+    ]
+})
+
+export class MajorModule { }

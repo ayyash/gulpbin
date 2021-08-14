@@ -1,0 +1,19 @@
+import { OnInit, Directive, ElementRef, Input, Renderer2 } from '@angular/core';
+
+
+@Directive({
+    selector: '[_Name_]',
+    exportAs: '_name_'
+})
+export class _Name_Directive implements OnInit {
+
+    @Input() _name_: string;
+
+    constructor(private el: ElementRef, private renderer: Renderer2) {
+        //
+    }
+
+    ngOnInit() {
+        //
+    }
+}

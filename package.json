@@ -17,6 +17,7 @@
   },
   "devDependencies": {},
   "scripts": {
+	"publish": "npm publish --access public",
 	"install": "npm install --save gulp gulp-autoprefixer gulp-concat gulp-clean-css gulp-inject gulp-less gulp-rename gulp-transform gulp-uglify gulp-replace"
   },
   "repository": {

@@ -1,0 +1,12 @@
+import { Pipe, PipeTransform } from '@angular/core';
+
+@Pipe({ name: '_name_' })
+export class _Name_Pipe implements PipeTransform {
+
+
+    transform(_name_: string): string {
+        return _name_;
+
+    }
+}
+

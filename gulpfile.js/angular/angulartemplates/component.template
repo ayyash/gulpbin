@@ -1,0 +1,15 @@
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+
+@Component({
+    _selector_
+    templateUrl: './viewpath.html',
+    changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class MajorNamePartialComponent implements OnInit {
+    constructor() {
+        //
+    }
+    ngOnInit(): void {
+        //
+    }	
+}
