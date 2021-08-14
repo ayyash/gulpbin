@@ -1,5 +1,5 @@
 var gulp = require('gulp');
-var gulpConfig = require('./shut.config.json');
+var shutConfig = require('./config.json');
 // var transform = require('gulp-transform');
 var inject = require('gulp-inject');
 
@@ -10,14 +10,14 @@ var inject = require('gulp-inject');
 // destination mockups/dummy and assets/fonts
 
 
-const fontspath = gulpConfig.iconfontspath;
+const fontspath = shutConfig.iconfontspath;
 const _prepvars = function(){
     return gulp.src([fontspath + 'variables.less', fontspath + 'selection.json'])
-        .pipe(gulp.dest(gulpConfig.srcUrl + 'dummy'));
+        .pipe(gulp.dest(shutConfig.srcUrl + 'dummy'));
 };
 const _prepfonts = function(){
     return gulp.src([fontspath + 'fonts/*'])
-        .pipe(gulp.dest(gulpConfig.distUrl + 'fonts'));
+        .pipe(gulp.dest(shutConfig.distUrl + 'fonts'));
 }
 
 const prepicons = gulp.parallel(_prepfonts, _prepvars);
@@ -25,7 +25,7 @@ const prepicons = gulp.parallel(_prepfonts, _prepvars);
 let liIconStr = "";
 const _getLigas = function(){
 	// require selection.json here, find ligature by icon var
-	var icons = require('../' + gulpConfig.srcUrl + 'dummy/selection.json').icons;
+	var icons = require('../' + shutConfig.srcUrl + 'dummy/selection.json').icons;
     let array = {};
     for (a of icons) {
 		array[a.properties.name] = a.properties.ligatures;
@@ -41,9 +41,9 @@ const _cssicons = function () {
     let returnStr = "";
 	const ligas = _getLigas();
 
-    return gulp.src(gulpConfig.srcUrl + 'less/ui.icons.less')
+    return gulp.src(shutConfig.srcUrl + 'less/ui.icons.less')
         .pipe(inject(
-            gulp.src(gulpConfig.srcUrl + 'dummy/variables.less'),
+            gulp.src(shutConfig.srcUrl + 'dummy/variables.less'),
             {
                 starttag: '// inject:icons', endtag: '// endinject',
                 transform: function (filePath, file) {
@@ -69,7 +69,7 @@ const _cssicons = function () {
                 }
             }
         ))
-        .pipe(gulp.dest(gulpConfig.srcUrl + 'less/'));
+        .pipe(gulp.dest(shutConfig.srcUrl + 'less/'));
 
 
 
@@ -78,9 +78,9 @@ const _cssicons = function () {
 const iconset = gulp.series(_cssicons, function(){
 
 
-    return gulp.src(gulpConfig.srcUrl + 'dummy/iconset.html')
+    return gulp.src(shutConfig.srcUrl + 'dummy/iconset.html')
         .pipe(inject(
-            gulp.src(gulpConfig.srcUrl + 'dummy/variables.less', { read: false }),
+            gulp.src(shutConfig.srcUrl + 'dummy/variables.less', { read: false }),
             {
                 starttag: '<!-- inject:icons -->', endtag: '<!-- endinject -->',
                 transform: function (filePath, file) {
@@ -89,14 +89,14 @@ const iconset = gulp.series(_cssicons, function(){
                 }
             }
         ))
-        .pipe(gulp.dest(gulpConfig.srcUrl + 'dummy/'));
+        .pipe(gulp.dest(shutConfig.srcUrl + 'dummy/'));
 });
 
 const createicons = gulp.series(prepicons, iconset);
 
 
 module.exports = function(config) {
-	gulpConfig = config;
+	shutConfig = config;
 
 
 	return {

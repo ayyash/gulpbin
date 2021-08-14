@@ -10,7 +10,7 @@ var autoprefixer = require('gulp-autoprefixer');
 var concat = require('gulp-concat');
 var transform = require('gulp-transform');
 
-var shutConfig = require('./shut.config.json');
+var shutConfig = require('./config.json');
 
 
 var rtl = require('./rtl.js');
