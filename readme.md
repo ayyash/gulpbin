@@ -13,13 +13,15 @@ npm install @sekrab/gulpbin --save-dev
 npm install gulp --save-dev
 ```
 
-3. Create `gulpfiles.js` folder
+3. Create `gulpfile.js` folder
 
 4. Add `config.json` [example config](client/config.json)
 
 5. Add `index.js` [example index](client/index.js)
 
+Find in code, example client of those two files.
 
+> Keep an eye on https://github.com/gulp-community/gulp-less/issues/312, if not yet resolved, update node_modules/gulp-less/index file with the content of the pull request https://github.com/gulp-community/gulp-less/pull/313
 
 ## Gulp commands for Angular
 
@@ -27,7 +29,7 @@ You can optionally use these instead of the angular cli packaged commands (or yo
 
 > general rule: name, and major name should start with uppercase letter: like Example, the file names and selectors generated are all lowercase
 
-> To know what each one generates, have a look under */gulpfiles.js/angulartemplates* folder
+> To know what each one generates, have a look under */gulpfile.js/angulartemplates* folder
 
 ### Generate
 
