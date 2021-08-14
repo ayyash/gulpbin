@@ -8,12 +8,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ayyash/gulp.git"
+    "url": "git+https://github.com/ayyash/gulpbin.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ayyash/gulp/issues"
+    "url": "https://github.com/ayyash/gulp015644/issues"
   },
   "homepage": "https://github.com/ayyash/gulp#readme",
   "dependencies": {
