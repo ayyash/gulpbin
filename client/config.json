@@ -1,6 +1,7 @@
 {
     "shutUrl": "./node_modules/shut/src/",
     "srcUrl": "./mockup/",
+	"absoluteSrcUrl": "mockup/",
     "distUrl": "./src/assets/",
     "appUrl": "./src/app/",
     "hostUrl": "./host/",

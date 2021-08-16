@@ -1,12 +1,12 @@
 {
 	"shutUrl": "./node_modules/shut/src/",
-	"srcUrl": "./minisite/src/",
-	"distUrl": "./minisite/src/assets/",
-	"minDistUrl": "./minisite/public/",
-	"iconfontspath": "./fontfiles/fonts/",
-	"shutDistUrl": "./dist/",
+	"srcUrl": "./mockup/",
+	"absoluteSrcUrl": "test/mockup/",
+	"distUrl": "./src/assets/",
+	"minDistUrl": "./public/",
+	"iconfontspath": "./fontfiles/",
 	"projectName": "sh",
-	"isRtl": true,
+	"isRtl": false,
 	"browserslist": [
 		"> 6%"
 	],
