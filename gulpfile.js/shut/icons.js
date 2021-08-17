@@ -27,7 +27,11 @@ let liIconStr = "";
 const _getLigas = function(){
 	// require selection.json here, find ligature by icon var
 	// needs fixing, create a new config 
-	var icons = require(`../../${shutConfig.absoluteSrcUrl}dummy/selection.json`).icons;
+	// this is a problem, i need to get the file in output project, not here
+
+	console.log(`Current directory: ${process.cwd()}`);
+	
+	var icons = require(`${process.cwd()}/${shutConfig.srcUrl}dummy/selection.json`).icons;
     let array = {};
     for (a of icons) {
 		array[a.properties.name] = a.properties.ligatures;
