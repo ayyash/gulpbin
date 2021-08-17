@@ -1,7 +1,6 @@
 {
 	"shutUrl": "./node_modules/shut/src/",
 	"srcUrl": "./mockup/",
-	"absoluteSrcUrl": "test/mockup/",
 	"distUrl": "./src/assets/",
 	"minDistUrl": "./public/",
 	"iconfontspath": "./fontfiles/",
