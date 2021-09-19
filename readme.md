@@ -72,6 +72,8 @@ You can optionally use these instead of the angular cli packaged commands (or yo
 
 ### Inject
 
+TODO: change this, no longer injecting components
+
 Following are quick calls to inject all classes in specific folders into their barrels in the core folder, to make them easier to use throughout the project. Classes should not be imported individually but through their barrel, to keep maintenance of their folder path under control.
 
 > A general rule, all files prefixed with "_" are excluded from injection. Also no files under the following folders are included in injection: components/layouts, components/common, components/abstract.

@@ -26,7 +26,7 @@ const ngConfig = {
         Pipes: __dirname + angularTemplates + 'pipe.template',
         Route: __dirname + angularTemplates + 'route.template',
         RouteModule: __dirname + angularTemplates + 'routeModule.template',
-        Declaration: 'CoreComponents.MajorNamePartialComponent',
+        Declaration: 'MajorNamePartialComponent',
         Module: __dirname + angularTemplates + 'module.template',
         Model: __dirname + angularTemplates + 'model.template',
         Service: __dirname + angularTemplates + 'service.template',
@@ -45,7 +45,7 @@ const ngConfig = {
         ApiConfig: gulpConfig.appUrl + ''
     },
     Core: {
-        Components: gulpConfig.appUrl + 'core/', // barrel
+        Components: gulpConfig.appUrl + 'core/', // barrel // TODO: remove
         ComponentsFile: 'components.ts',
         Services: gulpConfig.appUrl + 'core/', // barrel
         ServicesFile: 'services.ts',
@@ -97,6 +97,7 @@ function transformModel(filePath, file) {
 }
 
 // inject components in components.ts
+// Eylul 15, remove comnent barrel, function obsolete
 const _injectComponents = function() {
     // core components
     return gulp
@@ -227,10 +228,13 @@ const _createRouteModule = function() {
 
 // add component to a module or create a new one
 const _addComponentToModule = function() {
+	// Eylul 15, remove component barrels, now adding to module will add a normal import
     const { major, name, ispartial, withroute } = options;
     if (!major) {
         return gulp.src('.');
     }
+
+	// ComponentDestination_
 
     var majorName = major.substring(major.lastIndexOf('/') + 1);
     // if common or layouts, do not create module
@@ -246,13 +250,17 @@ const _addComponentToModule = function() {
             .replace('Name', name);
 
 
-    var component =  ngConfig.Templates.Declaration
+    var component =  ngConfig.Templates.Declaration // MajorNamePartialComponent
             .replace('Major', majorName)
             .replace('Name', name);
     if (!ispartial) component = component.replace('Partial', '');
 
+	// also replace  ***gulpimport**
+	// TODO: fix this by using inject
 
-    // place it inside the module, if // **gulpcomponent_first exists, replace with // **gulpcomponent and dont add a comma
+	const importStatement = `import { ${component} } from '../components/${major.toLowerCase()}/${name.toLowerCase()}.${ ispartial ? 'partial' : 'component'}';`;
+
+    // place it inside the module, if **gulpcomponent_first exists, replace with  **gulpcomponent and dont add a comma
     // src from /routes folder, no subfolders
     const src = withroute ? '.route.ts' : '.module.ts';
     return (
@@ -263,6 +271,7 @@ const _addComponentToModule = function() {
             .pipe(gulpif(!ispartial, replace('// **gulproute_first**', route + '\n// **gulproute**')))
             .pipe(replace('// **gulpcomponent**',  ', ' + component + '\n// **gulpcomponent**' ))
             .pipe(replace('// **gulpcomponent_first**',  component + '\n// **gulpcomponent**' ))
+            .pipe(replace('// ***gulpimport**',  importStatement + '\n// **gulpimport**' ))
             .pipe(gulp.dest(ngConfig.Destinations.Routes))
     );
 };
@@ -438,7 +447,8 @@ exports.injectServices = _injectServices;
 exports.injectLibModule = _injectLibModule;
 exports.injectModels = _injectModels;
 
-exports.injectAll = gulp.parallel(  gulp.series(_injectModels, _injectServices), _injectComponents, _injectLibModule, );
+// Eylul 15, removed component barrels, they are not shakable in angualr 
+exports.injectAll = gulp.parallel(  gulp.series(_injectModels, _injectServices), _injectLibModule, );
 
 // exports.createModule = _createModule; // create a module
 
@@ -450,7 +460,8 @@ exports.createComponent = gulp.series(
         _createComponent,
         _createRouteModule
     ),
-    _injectComponents,
+	// Eylul 15, removed component barrel
+    // _injectComponents,
     _addComponentToModule
 );
 

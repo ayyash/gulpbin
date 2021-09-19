@@ -25,7 +25,7 @@
                         [required]="true"
                         [compareWith]="compareFn"
                     >
-                        <option *ngFor="let item of items" [ngValue]="item">{{ item.name }}</option>
+                        <option *ngFor="let item of [1,2,3,4,5]" [ngValue]="item">{{ item }}</option>
                     </select>
                 </md-input>
             </div>
