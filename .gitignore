@@ -1,2 +1,3 @@
 /node_modules
 /test/fontfiles/
+**/node_modules

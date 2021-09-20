@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from '../core/shared.module';
 import { Routes, RouterModule } from '@angular/router';
-// ***gulpimport**
+// **gulpimport**
 
 const routes: Routes = [
    // **gulproute_first**

@@ -255,7 +255,7 @@ const _addComponentToModule = function() {
             .replace('Name', name);
     if (!ispartial) component = component.replace('Partial', '');
 
-	// also replace  ***gulpimport**
+	// also replace  **gulpimport**
 	// TODO: fix this by using inject
 
 	const importStatement = `import { ${component} } from '../components/${major.toLowerCase()}/${name.toLowerCase()}.${ ispartial ? 'partial' : 'component'}';`;
@@ -271,7 +271,7 @@ const _addComponentToModule = function() {
             .pipe(gulpif(!ispartial, replace('// **gulproute_first**', route + '\n// **gulproute**')))
             .pipe(replace('// **gulpcomponent**',  ', ' + component + '\n// **gulpcomponent**' ))
             .pipe(replace('// **gulpcomponent_first**',  component + '\n// **gulpcomponent**' ))
-            .pipe(replace('// ***gulpimport**',  importStatement + '\n// **gulpimport**' ))
+            .pipe(replace('// **gulpimport**',  importStatement + '\n// **gulpimport**' ))
             .pipe(gulp.dest(ngConfig.Destinations.Routes))
     );
 };
