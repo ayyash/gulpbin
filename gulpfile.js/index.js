@@ -2,7 +2,7 @@
 // run gulp with config
 const defaultConfig = require('./config.json');
 
-const j = require('./angular/ng');
+const ng = require('./angular/ng');
 const translate = require('./angular/translate');
 const postbuild = require('./angular/postbuild');
 
@@ -18,26 +18,25 @@ module.exports = function (config) {
 
 	// or config global then retrieve exports
 	// this is the worse option because even though it exposes exports, it uses global var for config
-	// wht is wrong with that? nothing, just not enough context
 	// although this is better to break apart for client
-	j.config(gulpConfig);
+	ng.config(gulpConfig);
 	translate.config(gulpConfig);
 	postbuild.config(gulpConfig);
 
 	// mapping exports to nicer names
-	const ng = {
-		injectComponents: j.injectComponents,
-		injectServices: j.injectServices,
-		injectLib: j.injectLibModule,
-		injectModels: j.injectModels,
-		inject: j.injectAll,
-		routemodule: j.createRouteModule,
-		component: j.createComponent,
-		pipe: j.createPipe,
-		directive: j.createDirective,
-		model: j.createModel,
-		service: j.createService,
-		fullService: j.createFullService,
+	const angular = {
+		injectComponents: ng.injectComponents,
+		injectServices: ng.injectServices,
+		injectLib: ng.injectLibModule,
+		injectModels: ng.injectModels,
+		inject: ng.injectAll,
+		routemodule: ng.createRouteModule,
+		component: ng.createComponent,
+		pipe: ng.createPipe,
+		directive: ng.createDirective,
+		model: ng.createModel,
+		service: ng.createService,
+		fullService: ng.createFullService,
 		// extract all translation pipes in resources.ar.ts to be ready for transation
 		// this is done once, redoing will overwrite existing translations
 		extract: translate.extract,
@@ -52,6 +51,6 @@ module.exports = function (config) {
 
 	};
 
-	return { shut: { ...assets, ...icons }, ng };
+	return { shut: { ...assets, ...icons }, angular };
 };
 

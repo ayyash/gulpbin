@@ -1,9 +1,7 @@
-// TODO: fix vars and consts
 // TODO: more consts for files names
 // TODO: split on seperate files
 
 
-// var gulp = require('gulp-param')(require('gulp'), process.argv);
 const  options = require('minimist')(process.argv.slice(2)); // those are params passed by cmd line
 const  fs = require('fs');
 const  gulp = require('gulp');
@@ -16,53 +14,61 @@ const angularTemplates = '/angulartemplates/';
 let  gulpConfig = require('../config.json');
 
 
-const ngConfig = {
-    Templates: {
-        Components: __dirname + angularTemplates + 'component.template',
-        FormComponents: __dirname + angularTemplates + 'component.form.template',
-        Views: __dirname + angularTemplates + 'view.template',
-        FormViews: __dirname + angularTemplates + 'view.form.template',
-        Directives: __dirname + angularTemplates + 'directive.template',
-        Pipes: __dirname + angularTemplates + 'pipe.template',
-        Route: __dirname + angularTemplates + 'route.template',
-        RouteModule: __dirname + angularTemplates + 'routeModule.template',
-        Declaration: 'MajorNamePartialComponent',
-        Module: __dirname + angularTemplates + 'module.template',
-        Model: __dirname + angularTemplates + 'model.template',
-        Service: __dirname + angularTemplates + 'service.template',
-        ApiConfig: __dirname + angularTemplates + 'config.template'
-    },
-    Destinations: {
-        Components: gulpConfig.appUrl + 'components/',
-        Views: gulpConfig.appUrl + 'components/',
-        Directives: gulpConfig.appUrl + 'lib/directives/',
-        Pipes: gulpConfig.appUrl + 'lib/pipes/',
-        // Modules: gulpConfig.appUrl + '', // root route location
-        Routes: gulpConfig.appUrl + 'routes/',
-        // RouteFile: 'routing.module.ts',
-        Models: gulpConfig.appUrl + 'models/',
-        Services: gulpConfig.appUrl + 'services/',
-        ApiConfig: gulpConfig.appUrl + ''
-    },
-    Core: {
-        Components: gulpConfig.appUrl + 'core/', // barrel // TODO: remove
-        ComponentsFile: 'components.ts',
-        Services: gulpConfig.appUrl + 'core/', // barrel
-        ServicesFile: 'services.ts',
-        CoreModule: gulpConfig.appUrl + 'core/', // module
-        CoreModuleFile: 'core.module.ts',
-        // Libs: gulpConfig.appUrl + 'core/', // barrel
-        // LibFile: 'lib.ts',
-        LibModule: gulpConfig.appUrl + 'lib/', // module
-        LibModuleFile: 'lib.module.ts',
-        ApiConfigFile: gulpConfig.appUrl + 'config.ts'
-    }
+let ngConfig = {};
+
+exports.config = function (config) {
+	gulpConfig = config;
+
+	ngConfig = {
+		Templates: {
+			Components: __dirname + angularTemplates + 'component.template',
+			FormComponents: __dirname + angularTemplates + 'component.form.template',
+			Views: __dirname + angularTemplates + 'view.template',
+			FormViews: __dirname + angularTemplates + 'view.form.template',
+			Directives: __dirname + angularTemplates + 'directive.template',
+			Pipes: __dirname + angularTemplates + 'pipe.template',
+			Route: __dirname + angularTemplates + 'route.template',
+			RouteModule: __dirname + angularTemplates + 'routeModule.template',
+			Declaration: 'MajorNamePartialComponent',
+			Module: __dirname + angularTemplates + 'module.template',
+			Model: __dirname + angularTemplates + 'model.template',
+			Service: __dirname + angularTemplates + 'service.template',
+			ApiConfig: __dirname + angularTemplates + 'config.template'
+		},
+		Destinations: {
+			Components: gulpConfig.appUrl + 'components/',
+			Views: gulpConfig.appUrl + 'components/',
+			Directives: gulpConfig.appUrl + 'lib/directives/',
+			Pipes: gulpConfig.appUrl + 'lib/pipes/',
+			// Modules: gulpConfig.appUrl + '', // root route location
+			Routes: gulpConfig.appUrl + 'routes/',
+			// RouteFile: 'routing.module.ts',
+			Models: gulpConfig.appUrl + 'models/',
+			Services: gulpConfig.appUrl + 'services/',
+			ApiConfig: gulpConfig.appUrl + ''
+		},
+		Core: {
+			Components: gulpConfig.appUrl + 'core/', // barrel // TODO: remove
+			ComponentsFile: 'components.ts',
+			Services: gulpConfig.appUrl + 'core/', // barrel
+			ServicesFile: 'services.ts',
+			CoreModule: gulpConfig.appUrl + 'core/', // module
+			CoreModuleFile: 'core.module.ts',
+			// Libs: gulpConfig.appUrl + 'core/', // barrel
+			// LibFile: 'lib.ts',
+			LibModule: gulpConfig.appUrl + 'lib/', // module
+			LibModuleFile: 'lib.module.ts',
+			ApiConfigFile: gulpConfig.appUrl + 'config.ts'
+		}
+	};
+	
 };
 
 const classRe = /export\s+(?:abstract )?class (\w+)/;
+
 function getClassName(file) {
-    var str = file.contents.toString('utf8');
-    var className = str.match(classRe);
+    const str = file.contents.toString('utf8');
+    const className = str.match(classRe);
     if (className && className.length > 1) return className[1];
     else return '';
 }
@@ -70,7 +76,7 @@ function transformClass(filePath, file, isImport) {
     // for every export class /name/ generate export {{name}} from {{path}}
     // if (filePath.indexOf('module') > -1 || filePath.indexOf('_') > -1) return '';
 
-    var className = getClassName(file);
+    const className = getClassName(file);
     if (className === '') return '';
 
     return `${isImport ? 'import' : 'export'} { ${className} } from '${filePath.substring(
@@ -86,7 +92,7 @@ function transformImport(filePath, file) {
 }
 
 function transformClassName(filePath, file) {
-    var className = getClassName(file);
+    const className = getClassName(file);
     if (className === '') return '';
 
     return className + ',';
@@ -206,7 +212,7 @@ const _createRouteModule = function() {
         return gulp.src('.');
     }
 
-    var majorName = major.substring(major.lastIndexOf('/') + 1);
+    const majorName = major.substring(major.lastIndexOf('/') + 1);
     // if common or layouts, do not create module
     if (majorName === 'Common' || majorName === 'Layouts') {
         return gulp.src('.');
@@ -236,12 +242,12 @@ const _addComponentToModule = function() {
 
 	// ComponentDestination_
 
-    var majorName = major.substring(major.lastIndexOf('/') + 1);
+    const majorName = major.substring(major.lastIndexOf('/') + 1);
     // if common or layouts, do not create module
     if (majorName === 'Common' || majorName === 'Layouts') {
         return gulp.src('.');
     }
-    var route =
+    const route =
         fs
             .readFileSync(ngConfig.Templates.Route, 'utf8')
             .replace('major', majorName.toLowerCase())
@@ -250,7 +256,7 @@ const _addComponentToModule = function() {
             .replace('Name', name);
 
 
-    var component =  ngConfig.Templates.Declaration // MajorNamePartialComponent
+    const component =  ngConfig.Templates.Declaration // MajorNamePartialComponent
             .replace('Major', majorName)
             .replace('Name', name);
     if (!ispartial) component = component.replace('Partial', '');
@@ -283,7 +289,7 @@ const _createView = function() {
     if (!major) {
         return gulp.src('.');
     }
-    var majorName = major.substring(major.lastIndexOf('/') + 1);
+    const majorName = major.substring(major.lastIndexOf('/') + 1);
 
     return gulp
         .src(isform ? ngConfig.Templates.FormViews : ngConfig.Templates.Views)
@@ -304,9 +310,9 @@ const _createComponent = function() {
     if (!major) {
         return gulp.src('.');
     }
-    var _partialView = '';
-    var _selector = '';
-    var majorName = major.substring(major.lastIndexOf('/') + 1);
+    let _partialView = '';
+    let _selector = '';
+    const majorName = major.substring(major.lastIndexOf('/') + 1);
     // if common, or layout dont include name
     if (majorName === 'Common' || majorName === 'Layouts') {
         majorName = '';
@@ -419,7 +425,7 @@ const _addToConfig = function(){
     // add a node to config to be used with newly created config
     const name = options.name;
 
-    var apiconfig =
+    const apiconfig =
     fs
         .readFileSync(ngConfig.Templates.ApiConfig, 'utf8')
         .replace(/_name_/gim, name.toLowerCase());
@@ -437,10 +443,6 @@ const _addToConfig = function(){
 
 // TODO: create guard and resolve
 
-
-exports.config =  function(config) {
-	gulpConfig = config;
-};
 
 exports.injectComponents = _injectComponents;
 exports.injectServices = _injectServices;
