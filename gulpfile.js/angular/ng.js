@@ -256,7 +256,7 @@ const _addComponentToModule = function() {
             .replace('Name', name);
 
 
-    const component =  ngConfig.Templates.Declaration // MajorNamePartialComponent
+    let component =  ngConfig.Templates.Declaration // MajorNamePartialComponent
             .replace('Major', majorName)
             .replace('Name', name);
     if (!ispartial) component = component.replace('Partial', '');
@@ -425,7 +425,7 @@ const _addToConfig = function(){
     // add a node to config to be used with newly created config
     const name = options.name;
 
-    const apiconfig =
+    const apiconfig =	
     fs
         .readFileSync(ngConfig.Templates.ApiConfig, 'utf8')
         .replace(/_name_/gim, name.toLowerCase());
