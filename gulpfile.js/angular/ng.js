@@ -312,7 +312,7 @@ const _createComponent = function() {
     }
     let _partialView = '';
     let _selector = '';
-    const majorName = major.substring(major.lastIndexOf('/') + 1);
+    let majorName = major.substring(major.lastIndexOf('/') + 1);
     // if common, or layout dont include name
     if (majorName === 'Common' || majorName === 'Layouts') {
         majorName = '';
