@@ -1,10 +1,7 @@
 
 // run gulp with config
 const defaultConfig = require('./config.json');
-
 const ng = require('./angular/ng');
-const translate = require('./angular/translate');
-const postbuild = require('./angular/postbuild');
 
 
 module.exports = function (config) {
@@ -12,17 +9,14 @@ module.exports = function (config) {
 	// Merge configs
 	const gulpConfig = config ? { ...defaultConfig, ...config } : defaultConfig;
 
-	// using two ways to get tasks, TODO: choose one or the other
 	const assets = require('./shut/assets')(gulpConfig);
 	const icons = require('./shut/icons')(gulpConfig);
 
-	// or config global then retrieve exports
-	// this is the worse option because even though it exposes exports, it uses global var for config
-	// although this is better to break apart for client
+	const t = require('./angular/translate')(gulpConfig);
+	const p =  require('../gulpfile.js/angular/postbuild')(gulpConfig);
+	
+	// TODO: i want to change that in some parallet universe
 	ng.config(gulpConfig);
-	translate.config(gulpConfig);
-	postbuild.config(gulpConfig);
-
 	// mapping exports to nicer names
 	const angular = {
 		injectComponents: ng.injectComponents,
@@ -39,15 +33,15 @@ module.exports = function (config) {
 		fullService: ng.createFullService,
 		// extract all translation pipes in resources.ar.ts to be ready for transation
 		// this is done once, redoing will overwrite existing translations
-		extract: translate.extract,
+		extract: t.extract,
 
 		// copy locales to server for ssr
-		locales: postbuild.locales,
+		locales: p.locales,
 		// generate index files
-		generateIndex: postbuild.generateIndex,
+		generateIndex: p.generateIndex,
 
 		// post build both:
-		postbuild: postbuild.postbuild
+		postbuild: p.postbuild
 
 	};
 

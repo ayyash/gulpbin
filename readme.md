@@ -5,7 +5,7 @@ This is a list of tasks used for multiple projects that I find handy, though the
 1. To install
 
 ```
-npm install @sekrab/gulpbin --save-dev
+npm install sekrab-gulpbin --save-dev
 ```
 
 2. Install `gulp` locally

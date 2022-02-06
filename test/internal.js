@@ -3,10 +3,6 @@
 const defaultConfig = require('../gulpfile.js/config.json');
 
 const j = require('../gulpfile.js/angular/ng');
-const translate = require('../gulpfile.js/angular/translate');
-const postbuild = require('../gulpfile.js/angular/postbuild');
-
-
 
 const gulpBin = function (config) {
 
@@ -22,8 +18,8 @@ const gulpBin = function (config) {
 	// wht is wrong with that? nothing, just not enough context
 	// although this is better to break apart for client
 	j.config(gulpConfig);
-	translate.config(gulpConfig);
-	postbuild.config(gulpConfig);
+	const t = require('./angular/translate')(gulpConfig);
+	const p =  require('../gulpfile.js/angular/postbuild')(gulpConfig);
 
 	// mapping exports to nicer names
 	const ng = {
@@ -41,15 +37,15 @@ const gulpBin = function (config) {
 		fullService: j.createFullService,
 		// extract all translation pipes in resources.ar.ts to be ready for transation
 		// this is done once, redoing will overwrite existing translations
-		extract: translate.extract,
+		extract: t.extract,
 
 		// copy locales to server for ssr
-		locales: postbuild.locales,
+		locales: p.locales,
 		// generate index files
-		generateIndex: postbuild.generateIndex,
+		generateIndex: p.generateIndex,
 
 		// post build both:
-		postbuild: postbuild.postbuild
+		postbuild: p.postbuild
 
 	};
 
