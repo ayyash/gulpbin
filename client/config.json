@@ -1,14 +1,15 @@
 {
     "shutUrl": "./node_modules/shut/src/",
     "srcUrl": "./mockup/",
-	"absoluteSrcUrl": "mockup/",
     "distUrl": "./src/assets/",
-    "appUrl": "./src/app/",
-    "hostUrl": "./host/",
+	"distBaseUrl": "/",
+	"stageUrl": "./src/",
     "projectName": "binname",
     "angularPrefix": "bn",
-    "iconfontspath": "./fontfiles/",
     "isRtl": true,
+    "appUrl": "./src/app/",
+    "hostUrl": "./host/",
+    "iconfontspath": "./fontfiles/",
     "isUrlBased": true,
     "languages": [
         {

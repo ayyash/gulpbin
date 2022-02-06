@@ -18,7 +18,7 @@ const config = require('./config.json');
 // TODO: a bit more helpful content
 
 // or bring them all in
-const gulpBin = require('@sekrab/gulpbin')(config);
+const gulpBin = require('sekrab-gulpbin')(config);
 
 // expose them all
 Object.keys(gulpBin).forEach(i => {
