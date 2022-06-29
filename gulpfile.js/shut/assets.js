@@ -189,7 +189,7 @@ module.exports = function(config) {
 	
 		ret.watch = function () {
 			// place code for your default task here
-			gulp.watch('**/less/(sh|ui|rtl){1}\.*.less', { ignoreInitial: false }, gulp.series(rawless, rawMirror));
+			gulp.watch(shutConfig.srcUrl + 'less/(sh|ui|rtl){1}\.*.less', { ignoreInitial: false }, gulp.series(rawless, rawMirror));
 	
 		}
 		ret.critical = gulp.series(rawNonCritical, rawCritical, rawNonCriticalRtl, rawCriticalRtl);
@@ -200,7 +200,7 @@ module.exports = function(config) {
 		ret.buildcss = buildcss;
 		ret.watch = function () {
 			// place code for your default task here
-			gulp.watch('**/less/(sh|ui){1}\.*.less', { ignoreInitial: false }, rawless);
+			gulp.watch(shutConfig.srcUrl + 'less/(sh|ui){1}\.*.less', { ignoreInitial: false }, rawless);
 	
 		}
 		ret.critical = gulp.series(rawNonCritical, rawCritical);
