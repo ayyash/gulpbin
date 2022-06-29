@@ -1,0 +1,24 @@
+
+{
+    "shutUrl": "./node_modules/shut/src/",
+    "srcUrl": "./mockup/",
+    "distUrl": "./src/assets/",
+	"distBaseUrl": "/",
+	"stageUrl": "./src/",
+    "projectName": "binname",
+    "angularPrefix": "bn",
+    "isRtl": false,
+    "appUrl": "./src/app/",
+    "hostUrl": "./host/",
+    "iconfontspath": "./fontfiles/",
+    "isUrlBased": true,
+    "languages": [
+        {
+            "name": "en",
+            "isRtl": false
+        }
+    ],
+    "browserslist": [
+        "defaults"
+    ]
+}
