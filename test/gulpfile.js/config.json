@@ -1,24 +1,47 @@
-
 {
-    "shutUrl": "./node_modules/shut/src/",
-    "srcUrl": "./mockup/",
-    "distUrl": "./src/assets/",
-	"distBaseUrl": "/",
-	"stageUrl": "./src/",
-    "projectName": "binname",
-    "angularPrefix": "bn",
-    "isRtl": false,
-    "appUrl": "./src/app/",
-    "hostUrl": "./host/",
-    "iconfontspath": "./fontfiles/",
-    "isUrlBased": true,
-    "languages": [
-        {
-            "name": "en",
-            "isRtl": false
-        }
-    ],
-    "browserslist": [
-        "defaults"
-    ]
+	"prefix": "cr",
+	"assets": {
+		"shutPath": "./node_modules/shut/src/",
+		"srcPath": "./raw/",
+		"distPath": "./src/assets/",
+		"iconfontsPath": "./fontfiles/",
+		"cssFileName": "sh",
+		"isRtl": false,
+		"minifyPath": "./public/",
+		"browserslist": [
+			"> 6%"
+		]
+	},
+	"ng": {
+		"appPath": "./src/app/"
+	},
+	"extract": {
+		"scan": "./src/app/components",
+		"destination": "./src/locale/"
+	},
+	"locales": {
+		"source": "./host/client/placeholder.html",
+		"destination": "./host/index/",
+		"fileName": "index.html",
+		"isUrlBased": false,
+		"withFolders": false
+	},
+	"languages": [
+		{
+			"name": "en",
+			"isRtl": false,
+			"localeId": "en"
+		},
+		{
+			"name": "ar",
+			"isRtl": true,
+			"localeId": "ar-JO",
+			"isDefault": true
+		},
+		{
+			"name": "fr",
+			"isRtl": false,
+			"localeId": "fr-CA"
+		}
+	]
 }

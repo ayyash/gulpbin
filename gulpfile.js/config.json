@@ -1,26 +1,42 @@
 {
-	"shutUrl": "./node_modules/shut/src/",
-	"srcUrl": "./mockup/",
-	"distUrl": "./src/assets/",
-	"minDistUrl": "./public/",
-	"iconfontspath": "./fontfiles/",
-	"projectName": "sh",
-	"isRtl": false,
-	"browserslist": [
-		"> 6%"
-	],
-	"appUrl": "./src/app/",
-	"hostUrl": "./host/",
-	"angularPrefix": "cr",
-	"isUrlBased": true,
+	"prefix": "sh",
+	"assets": {
+		"shutPath": "./node_modules/shut/src/",
+		"srcPath": "./mockup/",
+		"distPath": "./src/assets/",
+		"iconfontsPath": "./fontfiles/",
+		"cssFileName": "sh",
+		"isRtl": false,
+		"minifyPath": "./public/",
+		"browserslist": [
+			"> 6%"
+		]
+	},
+	"ng": {
+		"appPath": "./src/app/"
+	},
+	"extract": {
+		"scan": "./src/app/components",
+		"destination": "./src/locale/"
+	},
+	"locales": {
+		"source": "./host/client/placeholder.html",
+		"destination": "./host/index/",
+		"fileName": "index.html",
+		"isUrlBased": false,
+		"withFolders": false
+	},
 	"languages": [
 		{
 			"name": "en",
-			"isRtl": false
+			"isRtl": false,
+			"localeId": "en"
 		},
 		{
 			"name": "ar",
-			"isRtl": true
+			"isRtl": true,
+			"localeId": "ar-JO",
+			"isDefault": true
 		}
 	]
 }

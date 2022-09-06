@@ -1,7 +1,7 @@
 const gulp = require('gulp');
 const inject = require('gulp-inject');
 
-
+/***********OBSOLETE */
 let gulpConfig = require('../config.json');
 
 const _config = {

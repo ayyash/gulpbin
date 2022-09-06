@@ -65,7 +65,7 @@ You can optionally use these instead of the angular cli packaged commands (or yo
     > Note: `gulp inject` reinjects the file in lib.module.ts, to prevent that, rename the file and remove 'pipe' keyword, move the file out of /lib/pipes folder, or prefix name with _.
 
 - `gulp directive --name Example`   
-    Create an `example.directive.ts` and places it in */lib/directives*, then exports it in *lib.module.ts*. This is already imported inside */core/shared.module* which is imported into *app.module*, you can immidiately start using it, if however you want to use it in a specific group of conrols, your job is to remove it from */lib/lib.module.ts* and declare it elsehwere. The selector of the directive is prefixed with configuration property: **angularPrefix**.
+    Create an `example.directive.ts` and places it in */lib/directives*, then exports it in *lib.module.ts*. This is already imported inside */core/shared.module* which is imported into *app.module*, you can immidiately start using it, if however you want to use it in a specific group of conrols, your job is to remove it from */lib/lib.module.ts* and declare it elsehwere. The selector of the directive is prefixed with configuration property: **prefix**.
 
     > Note: `gulp inject` reinjects the file in lib.module.ts, to prevent that, rename the file and remove 'directive' keyword, move the file out of /lib/directives folder, or prefix name with _.
 

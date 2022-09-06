@@ -2,7 +2,7 @@
 // after building to host, copy the index.html into host/index folder with all supported languages
 // replace text $1 and so on with the right strings (en, ar...)
 
-
+/************ OBSOLETE */
 const gulp = require('gulp');
 const rename = require('gulp-rename');
 const transform = require('gulp-transform');
