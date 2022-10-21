@@ -161,13 +161,7 @@ const buildcss = function () {
 	// this step is not part of the shut, but rather the working environment of every project
 	return gulp
 		.src(`${distPath}css/${cssFileName}.css`)
-		.pipe(cleancss({
-			level: {
-				2: {
-					all: true
-				}
-			}
-		}))
+		.pipe(cleancss())
 		.pipe(rename({ basename:  cssFileName, suffix: '.min' }))
 		.pipe(gulp.dest(minifyPath + 'css'))
 		.on('error', console.error.bind(console));
@@ -178,13 +172,7 @@ const buildRtlcss = function () {
 	
 	return gulp
 		.src(`${distPath}css/${cssFileName}.rtl.css`)
-		.pipe(cleancss({
-			level: {
-				2: {
-					all: true
-				}
-			}
-		}))
+		.pipe(cleancss())
 		.pipe(rename({ basename: cssFileName, suffix: '.rtl.min' }))
 		.pipe(gulp.dest(minifyPath + 'css'))
 		.on('error', console.error.bind(console));

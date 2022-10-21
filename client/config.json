@@ -9,7 +9,7 @@
 		"isRtl": false,
 		"minifyPath": "./public/",
 		"browserslist": [
-			"default"
+			"defaults"
 		]
 	},
 	"ng": {
