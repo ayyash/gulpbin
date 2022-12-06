@@ -1,11 +1,13 @@
 // TODO: more consts for files names
 // TODO: split on seperate files
 
+// This version: all pipes directives and partial components are standalone
+// default imports: CommonModule
 
 const params = require('minimist')(process.argv.slice(2)); // those are params passed by cmd line
 const fs = require('fs');
 const gulp = require('gulp');
-const inject = require('gulp-inject');
+// const inject = require('gulp-inject');
 const rename = require('gulp-rename');
 const replace = require('gulp-replace');
 const gulpif = require('gulp-if');
@@ -27,8 +29,8 @@ const setConfig = (config) => {
 			FormComponents: __dirname + angularTemplates + 'component.form.template',
 			Views: __dirname + angularTemplates + 'view.template',
 			FormViews: __dirname + angularTemplates + 'view.form.template',
-			Directives: __dirname + angularTemplates + 'directive.template',
-			Pipes: __dirname + angularTemplates + 'pipe.template',
+			Directives: __dirname + angularTemplates + 'directive.standalone.template',
+			Pipes: __dirname + angularTemplates + 'pipe.standalone.template',
 			Route: __dirname + angularTemplates + 'route.template',
 			RouteModule: __dirname + angularTemplates + 'routeModule.template',
 			Declaration: 'MajorNamePartialComponent',
@@ -48,13 +50,13 @@ const setConfig = (config) => {
 			ApiConfig: appPath + ''
 		},
 		Core: {
-			ComponentsFile: 'components.ts',
-			Services: appPath + 'core/', // barrel
-			ServicesFile: 'services.ts',
-			CoreModule: appPath + 'core/', // module
-			CoreModuleFile: 'core.module.ts',
-			LibModule: appPath + 'lib/', // module
-			LibModuleFile: 'lib.module.ts',
+			// ComponentsFile: 'components.ts',
+			// Services: appPath + 'core/', // barrel
+			// ServicesFile: 'services.ts',
+			// CoreModule: appPath + 'core/', // module
+			// CoreModuleFile: 'core.module.ts',
+			// LibModule: appPath + 'lib/', // module
+			// LibModuleFile: 'lib.module.ts',
 			ApiConfigFile: appPath + 'config.ts'
 		}
 	}
@@ -62,142 +64,145 @@ const setConfig = (config) => {
 
 };
 
-const classRe = /export\s+(?:abstract )?class (\w+)/;
+// const classRe = /export\s+(?:abstract )?class (\w+)/;
 
-function getClassName(file) {
-	const str = file.contents.toString('utf8');
-	const className = str.match(classRe);
-	if (className && className.length > 1) return className[1];
-	else return '';
-}
-function transformClass(filePath, file, isImport) {
-	// for every export class /name/ generate export {{name}} from {{path}}
-	// if (filePath.indexOf('module') > -1 || filePath.indexOf('_') > -1) return '';
+// function getClassName(file) {
+// 	const str = file.contents.toString('utf8');
+// 	const className = str.match(classRe);
+// 	if (className && className.length > 1) return className[1];
+// 	else return '';
+// }
+// function transformClass(filePath, file, isImport) {
+// 	// for every export class /name/ generate export {{name}} from {{path}}
+// 	// if (filePath.indexOf('module') > -1 || filePath.indexOf('_') > -1) return '';
 
-	const className = getClassName(file);
-	if (className === '') return '';
+// 	const className = getClassName(file);
+// 	if (className === '') return '';
 
-	return `${isImport ? 'import' : 'export'} { ${className} } from '${filePath.substring(
-		0,
-		filePath.lastIndexOf('.')
-	)}';`;
-}
-function transformExport(filePath, file) {
-	return transformClass(filePath, file, false);
-}
-function transformImport(filePath, file) {
-	return transformClass(filePath, file, true);
-}
+// 	return `${isImport ? 'import' : 'export'} { ${className} } from '${filePath.substring(
+// 		0,
+// 		filePath.lastIndexOf('.')
+// 	)}';`;
+// }
+// function transformExport(filePath, file) {
+// 	return transformClass(filePath, file, false);
+// }
+// function transformImport(filePath, file) {
+// 	return transformClass(filePath, file, true);
+// }
 
-function transformClassName(filePath, file) {
-	const className = getClassName(file);
-	if (className === '') return '';
+// function transformClassName(filePath, file) {
+// 	const className = getClassName(file);
+// 	if (className === '') return '';
 
-	return className + ',';
-}
+// 	return className + ',';
+// }
 
-function transformModel(filePath, file) {
-	return `export * from '${filePath.substring(0, filePath.lastIndexOf('.'))}';`;
-}
+// function transformModel(filePath, file) {
+// 	return `export * from '${filePath.substring(0, filePath.lastIndexOf('.'))}';`;
+// }
 
-const _injectLibModule = function () {
-	// inject classes into the lib module
-	return gulp
-		.src(ngConfig.Core.LibModule + ngConfig.Core.LibModuleFile)
-		.pipe(
-			inject(
-				gulp.src([
-					ngConfig.Destinations.Directives + '**/*.directive.ts',
-					ngConfig.Destinations.Pipes + '**/*.pipe.ts',
-					'!**/_*.ts'
-				]),
-				{
-					relative: true,
-					starttag: '// inject:libs',
-					endtag: '// endinject',
-					transform: transformClassName
-				}
-			)
-		)
-		.pipe(
-			inject(
-				gulp.src([
-					ngConfig.Destinations.Directives + '**/*.directive.ts',
-					ngConfig.Destinations.Pipes + '**/*.pipe.ts',
-					'!**/_*.ts'
-				]),
-				{
-					relative: true,
-					starttag: '// inject:importlibs',
-					endtag: '// endinject',
-					addPrefix: '.',
-					transform: transformImport
-				}
-			)
-		)
-		.pipe(gulp.dest(ngConfig.Core.LibModule));
-};
+// const _injectLibModule = function () {
+// 	// inject classes into the lib module
+// 	return gulp
+// 		.src(ngConfig.Core.LibModule + ngConfig.Core.LibModuleFile)
+// 		.pipe(
+// 			inject(
+// 				gulp.src([
+// 					ngConfig.Destinations.Directives + '**/*.directive.ts',
+// 					ngConfig.Destinations.Pipes + '**/*.pipe.ts',
+// 					'!**/_*.ts'
+// 				]),
+// 				{
+// 					relative: true,
+// 					starttag: '// inject:libs',
+// 					endtag: '// endinject',
+// 					transform: transformClassName
+// 				}
+// 			)
+// 		)
+// 		.pipe(
+// 			inject(
+// 				gulp.src([
+// 					ngConfig.Destinations.Directives + '**/*.directive.ts',
+// 					ngConfig.Destinations.Pipes + '**/*.pipe.ts',
+// 					'!**/_*.ts'
+// 				]),
+// 				{
+// 					relative: true,
+// 					starttag: '// inject:importlibs',
+// 					endtag: '// endinject',
+// 					addPrefix: '.',
+// 					transform: transformImport
+// 				}
+// 			)
+// 		)
+// 		.pipe(gulp.dest(ngConfig.Core.LibModule));
+// };
 
-const _injectModels = function () {
-	return gulp
-		.src(ngConfig.Core.Services + ngConfig.Core.ServicesFile)
-		.pipe(
-			inject(gulp.src([ngConfig.Destinations.Models + '**/*.model.ts', '!**/_*.ts']), {
-				relative: true,
-				starttag: '// inject:models',
-				endtag: '// endinject',
-				transform: transformModel
-			})
-		)
+// const _injectModels = function () {
+// 	return gulp
+// 		.src(ngConfig.Core.Services + ngConfig.Core.ServicesFile)
+// 		.pipe(
+// 			inject(gulp.src([ngConfig.Destinations.Models + '**/*.model.ts', '!**/_*.ts']), {
+// 				relative: true,
+// 				starttag: '// inject:models',
+// 				endtag: '// endinject',
+// 				transform: transformModel
+// 			})
+// 		)
 
-		.pipe(gulp.dest(ngConfig.Core.Services));
-};
+// 		.pipe(gulp.dest(ngConfig.Core.Services));
+// };
 
-const _injectServices = function () {
-	// inect in core.module all services, guards and resolves
-	// until u figure o
-	return gulp
-		.src(ngConfig.Core.Services + ngConfig.Core.ServicesFile)
-		.pipe(
-			inject(
-				gulp.src([
-					ngConfig.Destinations.Services + '**/*.ts',
-					'!' + ngConfig.Destinations.Services + '**/*.abstract.ts',
-					'!' + ngConfig.Destinations.Services + '**/_*.ts'
-				]),
-				{
-					relative: true,
-					starttag: '// inject:services',
-					endtag: '// endinject',
-					transform: transformExport
-				}
-			)
-		)
-		.pipe(gulp.dest(ngConfig.Core.Services));
-};
+// const _injectServices = function () {
+// 	// inect in core.module all services, guards and resolves
+// 	// until u figure o
+// 	return gulp
+// 		.src(ngConfig.Core.Services + ngConfig.Core.ServicesFile)
+// 		.pipe(
+// 			inject(
+// 				gulp.src([
+// 					ngConfig.Destinations.Services + '**/*.ts',
+// 					'!' + ngConfig.Destinations.Services + '**/*.abstract.ts',
+// 					'!' + ngConfig.Destinations.Services + '**/_*.ts'
+// 				]),
+// 				{
+// 					relative: true,
+// 					starttag: '// inject:services',
+// 					endtag: '// endinject',
+// 					transform: transformExport
+// 				}
+// 			)
+// 		)
+// 		.pipe(gulp.dest(ngConfig.Core.Services));
+// };
 
-
+// FIXME: withroute means nothing now, it either is withroute, or standalone
+// or both, but never neither
 const _createRouteModule = function () {
-	let { major, withroute } = params;
-
+	let { major } = params;
+	
 	if (!major) {
 		return gulp.src('.');
 	}
-
+	
 	const majorName = major.substring(major.lastIndexOf('/') + 1);
 	// if common or layouts, do not create module
 	if (majorName === 'Common' || majorName === 'Layouts') {
 		return gulp.src('.');
 	}
-
-	const src = withroute ? ngConfig.Templates.RouteModule : ngConfig.Templates.Module;
+	// avoid modules, keep adding to the same routemodule
+	// const src = withroute ? ngConfig.Templates.RouteModule : ngConfig.Templates.Module;
+	const src = ngConfig.Templates.RouteModule;
 	return gulp
 		.src(src)
 		.pipe(replace('Major', majorName))
 		.pipe(
 			rename({
 				basename: majorName.toLowerCase(),
-				suffix: withroute ? '.route' : '.module',
+				// suffix: withroute ? '.route' : '.module',
+				suffix: '.route',
 				extname: '.ts'
 			})
 		)
@@ -207,7 +212,8 @@ const _createRouteModule = function () {
 // add component to a module or create a new one
 const _addComponentToModule = function () {
 	// Eylul 15, remove component barrels, now adding to module will add a normal import
-	const { major, name, ispartial, withroute } = params;
+	const { major, name, ispartial, withroute, standalone } = params;
+
 	if (!major) {
 		return gulp.src('.');
 	}
@@ -234,21 +240,24 @@ const _addComponentToModule = function () {
 	if (!ispartial) component = component.replace('Partial', '');
 
 	// also replace  **gulpimport**
-	// TODO: fix this by using inject
-
+	// import and add to route declarations or imports list
 	const importStatement = `import { ${component} } from '../components/${major.toLowerCase()}/${name.toLowerCase()}.${ispartial ? 'partial' : 'component'}';`;
 
 	// place it inside the module, if **gulpcomponent_first exists, replace with  **gulpcomponent and dont add a comma
 	// src from /routes folder, no subfolders
-	const src = withroute ? '.route.ts' : '.module.ts';
+	// const src = withroute ? '.route.ts' : '.module.ts';
 	return (
 		gulp
-			.src(ngConfig.Destinations.Routes + majorName.toLowerCase() + src)
+			.src(ngConfig.Destinations.Routes + majorName.toLowerCase() + '.route.ts')
 			// replace route and component
+			// if it is not partial force a route for it, even if standalone
 			.pipe(gulpif(!ispartial, replace('// **gulproute**', ',' + route + '\n// **gulproute**')))
 			.pipe(gulpif(!ispartial, replace('// **gulproute_first**', route + '\n// **gulproute**')))
-			.pipe(replace('// **gulpcomponent**', ', ' + component + '\n// **gulpcomponent**'))
-			.pipe(replace('// **gulpcomponent_first**', component + '\n// **gulpcomponent**'))
+			// if not standalone place in declaration
+			.pipe(gulpif(!standalone, replace('// **gulpcomponent**', ', ' + component + '\n// **gulpcomponent**')))
+			.pipe(gulpif(!standalone, replace('// **gulpcomponent_first**', component + '\n// **gulpcomponent**')))
+			// if standalone place in imports
+			.pipe(gulpif(standalone, replace('// **gulpcomponent_standalone**', component +', ' + '\n// **gulpcomponent_standalone**')))
 			.pipe(replace('// **gulpimport**', importStatement + '\n// **gulpimport**'))
 			.pipe(gulp.dest(ngConfig.Destinations.Routes))
 	);
@@ -278,8 +287,10 @@ const _createView = function () {
 };
 
 const _createComponent = function () {
-	const { major, name, ispartial, isform } = params;
+	const { major, name, ispartial, isform, standalone } = params;
 	const prefix = options.prefix;
+
+	const re = /\/\* STANDALONE \*\/[\s\S]*?\/\* ENDSTANDALONE \*\//gim;
 
 	if (!major) {
 		return gulp.src('.');
@@ -303,6 +314,7 @@ const _createComponent = function () {
 		.pipe(gulpif(!ispartial, replace('Partial', '')))
 		.pipe(replace('viewpath', name.toLowerCase() + _partialView))
 		.pipe(replace('_selector_', _selector))
+		.pipe(gulpif(!standalone, replace(re, '')))
 		.pipe(
 			rename({
 				basename: name.toLowerCase(),
@@ -422,11 +434,12 @@ module.exports = (config) => {
 
 	const ret = {};
 
-	ret.injectServices = _injectServices;
-	ret.injectLibModule = _injectLibModule;
-	ret.injectModels = _injectModels;
+	// i am retiring these too, no need
+	// ret.injectServices = _injectServices;
+	// ret.injectLibModule = _injectLibModule;
+	// ret.injectModels = _injectModels;
 
-	ret.injectAll = gulp.parallel(gulp.series(_injectModels, _injectServices), _injectLibModule,);
+	// ret.injectAll = gulp.parallel(gulp.series(_injectModels, _injectServices), _injectLibModule,);
 
 
 	ret.createRouteModule = _createRouteModule; // create a module with routing
@@ -440,11 +453,11 @@ module.exports = (config) => {
 		_addComponentToModule
 	);
 
-	ret.createPipe = gulp.series(_createPipe, _injectLibModule);
-	ret.createDirective = gulp.series(_createDirective, _injectLibModule);
-	ret.createModel = gulp.series(_createModel, _injectModels);
-	ret.createService = gulp.series(_createService, _injectServices);
-	ret.createFullService = gulp.series(gulp.parallel(_createModel, _createService, _addToConfig), _injectModels, _injectServices);
+	ret.createPipe = _createPipe;
+	ret.createDirective = _createDirective;
+	ret.createModel = _createModel;
+	ret.createService = _createService;
+	ret.createFullService = gulp.parallel(_createModel, _createService, _addToConfig);
 
 	return ret;
 

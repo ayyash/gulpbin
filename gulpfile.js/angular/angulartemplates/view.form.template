@@ -1,59 +1,50 @@
 <form [formGroup]="majorForm" novalidate [class.was-validated]="forceValidation">
-    <fieldset>
-        <div class="grid g-3">
-            <legend>Field</legend>
-            <div class="breath">
-                <md-input placeholder="Name">
-                    <input
-                        type="text"
-                        id="fieldname"
-                        class="md-input w100"
-                        mdinput
-                        formControlName="fieldname"
-                        [required]="true"
-                    />
-                    <div class="md-help-text" helptext>help text</div>
+	<fieldset>
+		<legend>Field</legend>
+		<md-input placeholder="Name">
+			<input
+				type="text"
+				id="fieldname"
+				class="md-input w100"
+				mdinput
+				formControlName="fieldname"
+				[required]="true"
+			/>
+			<div class="md-help-text" helptext>help text</div>
+		</md-input>	
+	
+		<div class="spaced">
+			<md-input placeholder="List">
+				<select
+					formControlName="list"
+					mdinput
+					class="md-input w100"
+					[required]="true"
+					[compareWith]="compareFn"
+				>
+					<option *ngFor="let item of [1,2,3,4,5]" [ngValue]="item">{{ item }}</option>
+				</select>
+			</md-input>
+		</div>
+	</fieldset>
 
-                </md-input>
-            </div>
-            <div class="spaced">
-                <md-input placeholder="List">
-                    <select
-                        formControlName="list"
-                        mdinput
-                        class="md-input w100"
-                        [required]="true"
-                        [compareWith]="compareFn"
-                    >
-                        <option *ngFor="let item of [1,2,3,4,5]" [ngValue]="item">{{ item }}</option>
-                    </select>
-                </md-input>
-            </div>
-        </div>
-    </fieldset>
+	<fieldset formGroupName="fieldgroup">
+		<legend>Group</legend>
 
-    <fieldset formGroupName="fieldgroup">
-        <div class="grid g-3">
-            <legend>Group</legend>
+		<div class="breath">
+			<md-input placeholder="group name">
+				<input
+					type="text"
+					class="md-input w100"
+					mdinput
+					mdpattern="email"
+					id="groupfieldname"
+					formControlName="fieldname"
+					[required]="true"
+				/>
+			</md-input>
+		</div>
+	</fieldset>
+	<div><button class="btn-rev" type="submit" (click)="saveMajor()">Save</button></div>
 
-            <div class="breath">
-                <md-input placeholder="group name">
-                    <input
-                        type="text"
-                        class="md-input w100"
-                        mdinput
-                        mdpattern="email"
-                        id="groupfieldname"
-                        formControlName="fieldname"
-                        [required]="true"
-                    />
-                </md-input>
-            </div>
-        </div>
-    </fieldset>
-
-    <div class="grid g-3">
-        <div></div>
-        <div><button class="btn-rev" type="submit" (click)="saveMajor()">Save</button></div>
-    </div>
 </form>

@@ -1,13 +1,22 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { IViewMode} from '../../core/services';
 import { Toast } from '../../lib/toast';
+/* STANDALONE */
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { MdInputModule } from '../../lib/mdinput/mdinput.module';
+/* ENDSTANDALONE */
 
 
 @Component({
     _selector_
     templateUrl: './viewpath.html',
     changeDetection: ChangeDetectionStrategy.OnPush
+	 /* STANDALONE */
+	 , standalone: true
+	 , imports: [CommonModule, RouterModule, ReactiveFormsModule, MdInputModule]
+	 /* ENDSTANDALONE */
 })
 export class MajorNamePartialComponent implements OnInit {
 

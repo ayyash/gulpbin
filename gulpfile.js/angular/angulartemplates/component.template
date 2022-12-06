@@ -1,9 +1,17 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+/* STANDALONE */
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+/* ENDSTANDALONE */
 
 @Component({
     _selector_
     templateUrl: './viewpath.html',
     changeDetection: ChangeDetectionStrategy.OnPush
+	 /* STANDALONE */
+	 , standalone: true
+	 , imports: [CommonModule, RouterModule]
+	 /* ENDSTANDALONE */
 })
 export class MajorNamePartialComponent implements OnInit {
     constructor() {

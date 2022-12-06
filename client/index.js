@@ -40,11 +40,13 @@
  
  // ng generators
  const ng = gulpBin.ng(localConfig);
- 
- exports.injectServices = ng.injectServices;
- exports.injectLib = ng.injectLibModule;
- exports.injectModels = ng.injectModels;
- exports.inject = ng.injectAll;
+
+ // no longer needed
+//  exports.injectServices = ng.injectServices;
+//  exports.injectLib = ng.injectLibModule;
+//  exports.injectModels = ng.injectModels;
+//  exports.inject = ng.injectAll;
+
  exports.routemodule = ng.createRouteModule;
  exports.component = ng.createComponent;
  exports.pipe = ng.createPipe;

@@ -1,11 +1,9 @@
 import { NgModule } from '@angular/core';
-import { SharedModule } from '../core/shared.module';
 import { RouterModule } from '@angular/router';
 // **gulpimport**
 
 @NgModule({
     imports: [
-        SharedModule,
         RouterModule
     ],
     declarations: [

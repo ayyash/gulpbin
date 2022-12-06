@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { SharedModule } from '../core/shared.module';
 import { Routes, RouterModule } from '@angular/router';
 // **gulpimport**
 
@@ -9,7 +8,7 @@ const routes: Routes = [
 
 @NgModule({
     imports: [
-        SharedModule,
+		  // **gulpcomponent_standalone**
         RouterModule.forChild(routes)
     ],
     declarations: [
