@@ -4,8 +4,8 @@ import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { GetParamsAsString } from '../core/common';
-import { I_Name_, _Name_, IListOptions, IList, ListOptions } from '../core/services';
-
+import { IListOptions, IList, ListOptions } from '../models/list.model';
+import {  I_Name_, _Name_, } from '../models/_name.model';
 
 
 @Injectable({providedIn: 'root'})

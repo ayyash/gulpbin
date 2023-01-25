@@ -1,4 +1,4 @@
-import { DataList, IList } from '../core/services';
+import { DataList, IList } from './list.model';
 
 export interface I_Name_ {
     id: string;

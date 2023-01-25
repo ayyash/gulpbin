@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { IViewMode} from '../../core/services';
+import { IViewMode } from '../models/viewmode.model';
 import { Toast } from '../../lib/toast';
 /* STANDALONE */
 import { CommonModule } from '@angular/common';

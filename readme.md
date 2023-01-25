@@ -31,28 +31,34 @@ You can optionally use these instead of the angular cli packaged commands (or yo
 
 ### Generate
 
-- `gulp component --name Example --major Container --ispartial false --isform false --withroute false`  
+- `gulp component --name Example --major Container --ispartial false --isform false --standalone false`  
     **Useful and common** This task creates a component inside a folder indicated in *major* (could be a folder path like Container/SubContainer), with the name `example.component.ts`. The folder is placed under */app/components*
     
     If **ispartial** is set to true, the file name is `example.partial.ts` (and it specifies a selector `cr-example` ready to be used). 
     
     If **isform** is set to true, the code is ready with minimum form elements. 
-    
-    If **withroute** is set to true, the task adds the component to the correct module under */routes/major.route.ts* (creates it if it does not exist), and adds a dummy route for it if it were not partial, and declares the component. 
-    
-    If set to false, the component is added to */routes/major.module.ts*, declares the component, and addes to the list of exported components. Use withroute to seperate components of a routed module, from those you will export to use in other modules.
+	 
+	 The task aslo adds the component to the correct module under */routes/major.route.ts* (creates it if it does not exist), and adds a dummy route for it if it were not partial, and declares the component.
 
-    Leaving out *--major* property, failes silently
+	 If **standalone** is set to true, it creates a standalone component with basic **CommonModule** and **RouteModule** as imports
 
-    Choosing *--major* to **Common** or **Layout** excludes the major name from file and component name. It also does not declare the generated component in any module. You must declare it manually anywhere you see fit. (Usually, common and layout components are included in the most base app module, which I intentionally do not touch dynamically.)
-    
-    Your job is to implement the component, and head to `src/app/routes.module.ts` (root routing module) to add the lazy loaded path to the new module (`MainLayout` component can be used as the wrapper default component.)
+	 If **standalone** is set to true, the component gets its route in */routes/major.route.ts* if it were not partial, and is added to the imports array whether partial or not.
+
+	 Creating a componetn with **standalone** and **ispartial** is ideal for creating shared components, it is by default imported to the major route, but you can remove it if not needed.
+
+
+	 Leaving out *--major* property, failes silently
+
+	 Choosing *--major* to **Common** or **Layout** excludes the major name from file and component name. It also does not declare the generated component in any module. You must declare it manually anywhere you see fit. (Usually, common and layout components are included in the most base app module, which I intentionally do not touch dynamically.)
+	
+	 Your job is to implement the component, and head to `src/app/routes.module.ts` (root routing module) to add the lazy loaded path to the new module (`MainLayout` component can be used as the wrapper default component.)
+
 
 - `gulp model --name Example`  
-    Creates an `example.model.ts` in */models* folder with a single property 'id', your job is to implement it. It also performs an inject into */core/services*
+    Creates an `example.model.ts` in */models* folder with a single property 'id', your job is to implement it.
 
 - `gulp service --name Example`  
-    Creates an `example.service.ts` in */services* folder with the basic get, post, delete, and put functions, also injects the service in */core/services*. The service is `providedIn: root`. Your job is to implement the service correctly and create an api mapping points in *config.ts*
+    Creates an `example.service.ts` in */services* folder with the basic get, post, delete, and put functions. The service is `providedIn: root`. Your job is to implement the service correctly and create an api mapping points in *config.ts*
 
 - `gulp fullService --name Example`  
     **Useful but rare** In addition to the creating the model, and service and injecting them in their correct locations, it also creates an api config point in *config.ts*. Your job is to implement the service as requested. The service is ready to be injected in any component.
@@ -68,26 +74,6 @@ You can optionally use these instead of the angular cli packaged commands (or yo
     > Note: `gulp inject` reinjects the file in lib.module.ts, to prevent that, rename the file and remove 'directive' keyword, move the file out of /lib/directives folder, or prefix name with _.
 
 
-### Inject
-
-
-Following are quick calls to inject all classes in specific folders into their barrels in the core folder, to make them easier to use throughout the project. Classes should not be imported individually but through their barrel, to keep maintenance of their folder path under control.
-
-> A general rule, all files prefixed with "_" are excluded from injection. Also no files under the following folders are included in injection: components/layouts, components/common, components/abstract.
-
-- `gulp injectServices`: inject all services in **/services**  into **/core/services** barrel
-
-    Patterns: `*.ts`, excludes `*.abstract.ts`
-
-- `gulp injectLib`: inject all directives, and pipes from **/lib** into **/lib/lib.module** which is in turn imported into *core/shared.module*
-
-    Patterns: `pipes/*.pipe.ts`, `directives/*.directive.ts`
-
-- `gulp injectModels`: inject all models in **/models** into **/core/services** barrel
-
-    Patterns: `*.model.ts`
-
-- `gulp inject`: **Useful** Injects all above, do this when in doubt that you missed something, or you deleted a file.
 
 ## Assets
 

@@ -212,7 +212,7 @@ const _createRouteModule = function () {
 // add component to a module or create a new one
 const _addComponentToModule = function () {
 	// Eylul 15, remove component barrels, now adding to module will add a normal import
-	const { major, name, ispartial, withroute, standalone } = params;
+	const { major, name, ispartial, standalone } = params;
 
 	if (!major) {
 		return gulp.src('.');
