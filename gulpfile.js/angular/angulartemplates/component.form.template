@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { IViewMode } from '../models/viewmode.model';
-import { Toast } from '../../lib/toast';
+import { Toast } from '../../lib/toast/toast.state';
+import { IViewMode } from '../../models/viewmode.model';
 /* STANDALONE */
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -27,9 +27,9 @@ export class MajorNamePartialComponent implements OnInit {
     @Output() onCancel: EventEmitter<void> = new EventEmitter();
 
     forceValidation = false;
-    majorForm: FormGroup;
+    majorForm: UntypedFormGroup;
 
-    constructor(private fb: FormBuilder, private toast: Toast) {
+    constructor(private fb: UntypedFormBuilder, private toast: Toast) {
         //
     }
     ngOnInit(): void {
@@ -64,7 +64,7 @@ export class MajorNamePartialComponent implements OnInit {
             this.onSave.emit(_major);
         } else {
             this.forceValidation = true;
-            this.toast.Show('INVALID_FORM', { sticky: false, extracss: 'error' });
+            this.toast.ShowError('INVALID_FORM');
         }
     }
 }

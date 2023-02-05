@@ -1,5 +1,5 @@
-// TODO: more consts for files names
-// TODO: split on seperate files
+// TODO: make specific for listing out of state
+// TODO: crate state service
 
 // This version: all pipes directives and partial components are standalone
 // default imports: CommonModule
@@ -50,13 +50,7 @@ const setConfig = (config) => {
 			ApiConfig: appPath + ''
 		},
 		Core: {
-			// ComponentsFile: 'components.ts',
-			// Services: appPath + 'core/', // barrel
-			// ServicesFile: 'services.ts',
-			// CoreModule: appPath + 'core/', // module
-			// CoreModuleFile: 'core.module.ts',
-			// LibModule: appPath + 'lib/', // module
-			// LibModuleFile: 'lib.module.ts',
+		
 			ApiConfigFile: appPath + 'config.ts'
 		}
 	}
@@ -64,119 +58,6 @@ const setConfig = (config) => {
 
 };
 
-// const classRe = /export\s+(?:abstract )?class (\w+)/;
-
-// function getClassName(file) {
-// 	const str = file.contents.toString('utf8');
-// 	const className = str.match(classRe);
-// 	if (className && className.length > 1) return className[1];
-// 	else return '';
-// }
-// function transformClass(filePath, file, isImport) {
-// 	// for every export class /name/ generate export {{name}} from {{path}}
-// 	// if (filePath.indexOf('module') > -1 || filePath.indexOf('_') > -1) return '';
-
-// 	const className = getClassName(file);
-// 	if (className === '') return '';
-
-// 	return `${isImport ? 'import' : 'export'} { ${className} } from '${filePath.substring(
-// 		0,
-// 		filePath.lastIndexOf('.')
-// 	)}';`;
-// }
-// function transformExport(filePath, file) {
-// 	return transformClass(filePath, file, false);
-// }
-// function transformImport(filePath, file) {
-// 	return transformClass(filePath, file, true);
-// }
-
-// function transformClassName(filePath, file) {
-// 	const className = getClassName(file);
-// 	if (className === '') return '';
-
-// 	return className + ',';
-// }
-
-// function transformModel(filePath, file) {
-// 	return `export * from '${filePath.substring(0, filePath.lastIndexOf('.'))}';`;
-// }
-
-// const _injectLibModule = function () {
-// 	// inject classes into the lib module
-// 	return gulp
-// 		.src(ngConfig.Core.LibModule + ngConfig.Core.LibModuleFile)
-// 		.pipe(
-// 			inject(
-// 				gulp.src([
-// 					ngConfig.Destinations.Directives + '**/*.directive.ts',
-// 					ngConfig.Destinations.Pipes + '**/*.pipe.ts',
-// 					'!**/_*.ts'
-// 				]),
-// 				{
-// 					relative: true,
-// 					starttag: '// inject:libs',
-// 					endtag: '// endinject',
-// 					transform: transformClassName
-// 				}
-// 			)
-// 		)
-// 		.pipe(
-// 			inject(
-// 				gulp.src([
-// 					ngConfig.Destinations.Directives + '**/*.directive.ts',
-// 					ngConfig.Destinations.Pipes + '**/*.pipe.ts',
-// 					'!**/_*.ts'
-// 				]),
-// 				{
-// 					relative: true,
-// 					starttag: '// inject:importlibs',
-// 					endtag: '// endinject',
-// 					addPrefix: '.',
-// 					transform: transformImport
-// 				}
-// 			)
-// 		)
-// 		.pipe(gulp.dest(ngConfig.Core.LibModule));
-// };
-
-// const _injectModels = function () {
-// 	return gulp
-// 		.src(ngConfig.Core.Services + ngConfig.Core.ServicesFile)
-// 		.pipe(
-// 			inject(gulp.src([ngConfig.Destinations.Models + '**/*.model.ts', '!**/_*.ts']), {
-// 				relative: true,
-// 				starttag: '// inject:models',
-// 				endtag: '// endinject',
-// 				transform: transformModel
-// 			})
-// 		)
-
-// 		.pipe(gulp.dest(ngConfig.Core.Services));
-// };
-
-// const _injectServices = function () {
-// 	// inect in core.module all services, guards and resolves
-// 	// until u figure o
-// 	return gulp
-// 		.src(ngConfig.Core.Services + ngConfig.Core.ServicesFile)
-// 		.pipe(
-// 			inject(
-// 				gulp.src([
-// 					ngConfig.Destinations.Services + '**/*.ts',
-// 					'!' + ngConfig.Destinations.Services + '**/*.abstract.ts',
-// 					'!' + ngConfig.Destinations.Services + '**/_*.ts'
-// 				]),
-// 				{
-// 					relative: true,
-// 					starttag: '// inject:services',
-// 					endtag: '// endinject',
-// 					transform: transformExport
-// 				}
-// 			)
-// 		)
-// 		.pipe(gulp.dest(ngConfig.Core.Services));
-// };
 
 // FIXME: withroute means nothing now, it either is withroute, or standalone
 // or both, but never neither
