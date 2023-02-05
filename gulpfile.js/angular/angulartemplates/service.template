@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { GetParamsAsString } from '../core/common';
 import { IListOptions, IList, ListOptions } from '../models/list.model';
-import {  I_Name_, _Name_, } from '../models/_name.model';
+import {  I_Name_, _Name_, } from '../models/_name_.model';
 
 
 @Injectable({providedIn: 'root'})
