@@ -33,6 +33,7 @@ const setConfig = (config) => {
 			Pipes: __dirname + angularTemplates + 'pipe.standalone.template',
 			Route: __dirname + angularTemplates + 'route.template',
 			RouteModule: __dirname + angularTemplates + 'routeModule.template',
+			RouteStandalone: __dirname + angularTemplates + 'route.standalone.template',
 			Declaration: 'MajorNamePartialComponent',
 			Module: __dirname + angularTemplates + 'module.template',
 			Model: __dirname + angularTemplates + 'model.template',
@@ -62,7 +63,7 @@ const setConfig = (config) => {
 // FIXME: withroute means nothing now, it either is withroute, or standalone
 // or both, but never neither
 const _createRouteModule = function () {
-	let { major } = params;
+	let { major, standalone } = params;
 	
 	if (!major) {
 		return gulp.src('.');
@@ -74,8 +75,10 @@ const _createRouteModule = function () {
 		return gulp.src('.');
 	}
 	// avoid modules, keep adding to the same routemodule
-	// const src = withroute ? ngConfig.Templates.RouteModule : ngConfig.Templates.Module;
-	const src = ngConfig.Templates.RouteModule;
+	// const src = withroute ? ngConfig.Templates.RouteModule : ngConfig.Templates.Module;	
+	// problem: what kind of route should i create? if standalone create a standalone route
+	// if route already exists add, but if new, choose according to first component created
+	const src = standalone ? ngConfig.Templates.RouteStandalone : ngConfig.Templates.RouteModule;
 	return gulp
 		.src(src)
 		.pipe(replace('Major', majorName))
@@ -93,12 +96,11 @@ const _createRouteModule = function () {
 // add component to a module or create a new one
 const _addComponentToModule = function () {
 	// Eylul 15, remove component barrels, now adding to module will add a normal import
+	// if not standalone add to route or module:
 	const { major, name, ispartial, standalone } = params;
-
 	if (!major) {
 		return gulp.src('.');
 	}
-
 	// ComponentDestination_
 
 	const majorName = major.substring(major.lastIndexOf('/') + 1);
@@ -106,6 +108,8 @@ const _addComponentToModule = function () {
 	if (majorName === 'Common' || majorName === 'Layouts') {
 		return gulp.src('.');
 	}
+	
+	// route: path and component
 	const route =
 		fs
 			.readFileSync(ngConfig.Templates.Route, 'utf8')
@@ -124,6 +128,7 @@ const _addComponentToModule = function () {
 	// import and add to route declarations or imports list
 	const importStatement = `import { ${component} } from '../components/${major.toLowerCase()}/${name.toLowerCase()}.${ispartial ? 'partial' : 'component'}';`;
 
+
 	// place it inside the module, if **gulpcomponent_first exists, replace with  **gulpcomponent and dont add a comma
 	// src from /routes folder, no subfolders
 	// const src = withroute ? '.route.ts' : '.module.ts';
@@ -137,12 +142,15 @@ const _addComponentToModule = function () {
 			// if not standalone place in declaration
 			.pipe(gulpif(!standalone, replace('// **gulpcomponent**', ', ' + component + '\n// **gulpcomponent**')))
 			.pipe(gulpif(!standalone, replace('// **gulpcomponent_first**', component + '\n// **gulpcomponent**')))
-			// if standalone place in imports
+			// if standalone place in imports (a route module)
 			.pipe(gulpif(standalone, replace('// **gulpcomponent_standalone**', component +', ' + '\n// **gulpcomponent_standalone**')))
-			.pipe(replace('// **gulpimport**', importStatement + '\n// **gulpimport**'))
+			// if standalone, check if not partial before adding
+			.pipe(gulpif(!(standalone && ispartial), replace('// **gulpimport**', importStatement + '\n// **gulpimport**')))
 			.pipe(gulp.dest(ngConfig.Destinations.Routes))
 	);
 };
+
+
 
 const _createView = function () {
 	const { major, name, ispartial, isform } = params;

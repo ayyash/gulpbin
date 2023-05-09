@@ -33,7 +33,9 @@ const rawless = function () {
 		.pipe(
 			inject(gulp.src(srcPath + 'less/media.*.less', { read: false }), {
 				starttag: '// inject:medialess',
-				endtag: '// endinject'
+				endtag: '// endinject',
+				// FIXME: not working
+				retlative: true
 			})
 		)
 		.pipe(rename({ basename: 'all' }))
