@@ -181,7 +181,7 @@ const _createComponent = function () {
 
 	const re = /\/\* STANDALONE \*\/[\s\S]*?\/\* ENDSTANDALONE \*\//gim;
 
-	const comments = /(\/\* STANDALONE \*\/\n|\/\* ENDSTANDALONE \*\/\n)/gis;
+	const comments = /(\/\* STANDALONE \*\/\s\s*|\/\* ENDSTANDALONE \*\/\s\s*)/gim;
 	if (!major) {
 		return gulp.src('.');
 	}
