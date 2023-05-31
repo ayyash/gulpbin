@@ -6,8 +6,8 @@ import { RouterModule } from '@angular/router';
 
 @Component({
     _selector_
-    templateUrl: './viewpath.html',
-    changeDetection: ChangeDetectionStrategy.OnPush
+    templateUrl: './viewpath.html'
+    , changeDetection: ChangeDetectionStrategy.OnPush
 	 /* STANDALONE */
 	 , standalone: true
 	 , imports: [CommonModule, RouterModule]

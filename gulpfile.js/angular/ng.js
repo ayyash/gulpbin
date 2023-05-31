@@ -181,6 +181,7 @@ const _createComponent = function () {
 
 	const re = /\/\* STANDALONE \*\/[\s\S]*?\/\* ENDSTANDALONE \*\//gim;
 
+	const comments = /(\/\* STANDALONE \*\/\n|\/\* ENDSTANDALONE \*\/\n)/gis;
 	if (!major) {
 		return gulp.src('.');
 	}
@@ -204,6 +205,8 @@ const _createComponent = function () {
 		.pipe(replace('viewpath', name.toLowerCase() + _partialView))
 		.pipe(replace('_selector_', _selector))
 		.pipe(gulpif(!standalone, replace(re, '')))
+		// remove comments
+		.pipe(replace(comments, ''))
 		.pipe(
 			rename({
 				basename: name.toLowerCase(),
