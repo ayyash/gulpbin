@@ -1,1 +1,5 @@
-<h5>Ready to implement component</h5>
+<div class="page">
+    <div class="container">
+        Ready to implement routed component
+    </div>
+</div>
