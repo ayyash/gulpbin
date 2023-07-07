@@ -1,6 +1,6 @@
 {
   "name": "sekrab-gulpbin",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "description": "sekrab gulp tasks shared amongst shut cricket and other libs",
   "main": "gulpfile.js/index.js",
   "dependencies": {
