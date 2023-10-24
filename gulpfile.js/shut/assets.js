@@ -94,6 +94,7 @@ const rawlessRtl = function () {
 		.on('error', console.error.bind(console));
 };
 
+
 // mirror /src/css/sh.rtl.css
 const rawMirror = gulp.series(rawlessRtl, function () {
 
@@ -189,7 +190,7 @@ module.exports = (config) => {
 
 	const ret = {};
 	
-	if (options.isRtl) {
+	if (options.isRtl && !options.noMirror) {
 		// produces both rtl and ltr
 		ret.rawless = gulp.series(rawless, rawMirror);
 		ret.buildcss = gulp.parallel(buildcss, buildRtlcss);
@@ -197,8 +198,21 @@ module.exports = (config) => {
 		ret.watch = function () {
 			// place code for your default task here
 			gulp.watch(options.srcPath + 'less/(sh|ui|rtl){1}\.*.less', { ignoreInitial: false }, gulp.series(rawless, rawMirror));
+            
+		}
+		ret.critical = gulp.series(rawNonCritical, rawCritical, rawNonCriticalRtl, rawCriticalRtl);
+	
+	} else if (options.isRtl && options.noMirror) {
+		// produces both rtl and ltr
+		ret.rawless = gulp.series(rawless, rawlessRtl);
+		ret.buildcss = gulp.parallel(buildcss, buildRtlcss);
+	
+		ret.watch = function () {
+            // without mirrorring
+			gulp.watch(options.srcPath + 'less/(sh|ui|rtl){1}\.*.less', { ignoreInitial: false }, gulp.series(rawless, rawlessRtl));
 	
 		}
+        // will fix this later
 		ret.critical = gulp.series(rawNonCritical, rawCritical, rawNonCriticalRtl, rawCriticalRtl);
 	
 	} else {
