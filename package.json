@@ -5,6 +5,7 @@
   "main": "gulpfile.js/index.js",
   "dependencies": {
     "browserslist": ">=4.22.1",
+    "glob-parent": "^5.1.2",
     "gulp": ">=3.9.1",
     "gulp-autoprefixer": ">=6.1.0",
     "gulp-clean-css": ">=4.3.0",
