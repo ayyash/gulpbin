@@ -11,5 +11,6 @@ const icons = require('./shut/icons');
 const defaultConfig = require('./config.json');
 
 module.exports = {
-	extract, locales,  assets, icons, ng, defaultConfig
+	 ng, defaultConfig, extract, locales, icons, assets
 };
+//extract, locales,  assets, icons,

@@ -6,7 +6,7 @@ const less = require('gulp-less');
 const cleancss = require('gulp-clean-css');
 const rename = require('gulp-rename');
 const inject = require('gulp-inject');
-const autoprefixer = require('gulp-autoprefixer');
+// const autoprefixer = require('gulp-autoprefixer');
 const concat = require('gulp-concat');
 const transform = require('gulp-transform');
 
@@ -49,11 +49,11 @@ const rawless = function () {
 			console.log(err);
 			this.emit('end');
 		})
-		.pipe(
-			autoprefixer({
-				overrideBrowserslist: browserslist
-			})
-		)
+		// .pipe(
+		// 	autoprefixer({
+		// 		overrideBrowserslist: browserslist
+		// 	})
+		// )
 		.pipe(rename({ basename: cssFileName }))
 		.pipe(gulp.dest(distPath + 'css'))
 		.on('error', console.error.bind(console));
@@ -84,11 +84,11 @@ const rawlessRtl = function () {
 			console.log(err);
 			this.emit('end');
 		})
-		.pipe(
-			autoprefixer({
-				overrideBrowserslist: browserslist
-			})
-		)
+		// .pipe(
+		// 	autoprefixer({
+		// 		overrideBrowserslist: browserslist
+		// 	})
+		// )
 		.pipe(rename({ basename: cssFileName, suffix: '.rtl' }))
 		.pipe(gulp.dest(distPath + 'css'))
 		.on('error', console.error.bind(console));
