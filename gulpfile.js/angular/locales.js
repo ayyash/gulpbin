@@ -3,7 +3,7 @@
 const gulp = require('gulp');
 // those plugins are not kept up to date, may be one day we shall replace them?
 const rename = require('gulp-rename');
-const transform = require('gulp-transform');
+const transform =  require('../gulp-transform/lib');
 
 const reLTR = /<!-- #LTR -->([\s\S]*?)<!-- #ENDLTR -->/gim;
 const reRTL = /<!-- #RTL -->([\s\S]*?)<!-- #ENDRTL -->/gim;

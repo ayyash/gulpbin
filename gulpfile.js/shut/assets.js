@@ -8,7 +8,7 @@ const rename = require('gulp-rename');
 const inject = require('gulp-inject');
 // const autoprefixer = require('gulp-autoprefixer');
 const concat = require('gulp-concat');
-const transform = require('gulp-transform');
+const transform = require('../gulp-transform/lib');
 
 // reassiging config means this library is one time use, cannot make custom tasks of it
 let options = require('../config.json');

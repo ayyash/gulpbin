@@ -1,6 +1,6 @@
 const gulp = require('gulp');
 const inject = require('gulp-inject');
-const transform = require('gulp-transform');
+const transform = require('../gulp-transform/lib');
 const rename = require('gulp-rename');
 const {  existsSync } = require('fs');
 

@@ -4,7 +4,7 @@
   "description": "sekrab gulp tasks shared amongst shut cricket and other libs",
   "main": "gulpfile.js/index.js",
   "dependencies": {
-    "browserslist": ">=4.23.0",
+    "browserslist": ">=4.23.3",
     "glob-parent": "^6.0.2",
     "gulp": "^5.0.0",
     "gulp-autoprefixer": "^9.0.0",
@@ -15,11 +15,9 @@
     "gulp-less": "^5.0.0",
     "gulp-rename": "^2.0.0",
     "gulp-replace": "^1.1.4",
-    "gulp-transform": "^3.0.5",
     "gulp-uglify": "^3.0.2",
-    "lodash": "^4.17.21",
-    "lodash.template": ">=4.5.0",
-    "minimist": "^1.2.8"
+    "minimist": "^1.2.8",
+    "tslib": "^2.7.0"
   },
   "scripts": {
     "public": "npm publish --access public",
