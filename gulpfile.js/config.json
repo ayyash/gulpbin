@@ -7,7 +7,6 @@
 		"iconfontsPath": "./fontfiles/",
 		"cssFileName": "sh",
 		"isRtl": false,
-        "noMirror": false,
 		"minifyPath": "./public/",
 		"browserslist": [
 			"> 6%"

@@ -1,4 +1,5 @@
 
+// OBSOLETE: not using any more
 exports.MirrorText = function(txt) {
   // this function is still under testing
 
