@@ -13,11 +13,11 @@ npm install sekrab-gulpbin --save-dev
 npm install gulp --save-dev
 ```
 
-3. Create `gulpfile.js` folder
+3. Create `gulpfile.js` folder (or create `gulpfile.js` file)
 
 4. Add `config.json` [example config](client/config.json)
 
-5. Add `index.js` [example index](client/index.js)
+5. Add `index.js` (or use the `gulpfile.js`) [example index](client/gulpfile.js)
 
 Find in code, example client of those two files.
 
