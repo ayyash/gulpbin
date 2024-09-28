@@ -1,10 +1,11 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
 /* STANDALONE */
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 /* ENDSTANDALONE */
 
 @Component({
+    _selector_
     templateUrl: './viewpath.html'
     , changeDetection: ChangeDetectionStrategy.OnPush
     /* STANDALONE */
@@ -12,9 +13,10 @@ import { RouterModule } from '@angular/router';
     , imports: [CommonModule, RouterModule]
     /* ENDSTANDALONE */
 })
-export class MajorNameComponent implements OnInit {
+export class MajorNamePartial implements OnInit {
 
     @Input() id: string;
+    @Output() onSomething: EventEmitter<any> = new EventEmitter();
 
     constructor() {
         //

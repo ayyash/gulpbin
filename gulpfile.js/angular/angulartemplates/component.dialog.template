@@ -1,21 +1,21 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
-/* STANDALONE */
 import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
-/* ENDSTANDALONE */
+import { DialogPartial } from '../../lib/dialog/partial';
+
 
 @Component({
     templateUrl: './viewpath.html'
     , changeDetection: ChangeDetectionStrategy.OnPush
-    /* STANDALONE */
     , standalone: true
     , imports: [CommonModule, RouterModule]
-    /* ENDSTANDALONE */
 })
-export class MajorNameComponent implements OnInit {
+export class MajorNameDialog implements OnInit {
 
-    @Input() id: string;
 
+    data!: any;
+    dialog!: DialogPartial;
+    
     constructor() {
         //
     }

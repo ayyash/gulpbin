@@ -4,7 +4,7 @@ import { OnInit, Directive, ElementRef, Input, Renderer2 } from '@angular/core';
 @Directive({
     selector: '[_Name_]',
     exportAs: '_name_',
-	 standalone: true
+	standalone: true
 })
 export class _Name_Directive implements OnInit {
 

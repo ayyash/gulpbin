@@ -1,6 +1,5 @@
-<form [formGroup]="majorForm" novalidate [class.was-validated]="forceValidation">
-	<fieldset>
-		<legend>Field</legend>
+<form [formGroup]="majorForm" novalidate (ngSubmit)="saveMajor()" [class.was-validated]="forceValidation">
+	
 		<md-input placeholder="Name">
 			<input
 				type="text"
@@ -26,7 +25,6 @@
 				</select>
 			</md-input>
 		</div>
-	</fieldset>
 
 	<fieldset formGroupName="fieldgroup">
 		<legend>Group</legend>
@@ -45,6 +43,6 @@
 			</md-input>
 		</div>
 	</fieldset>
-	<div><button class="btn-rev" type="submit" (click)="saveMajor()">Save</button></div>
+	<button class="btn-rev" type="submit" >Save</button>
 
 </form>

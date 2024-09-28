@@ -2,23 +2,18 @@ import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter
 import { UntypedFormGroup, UntypedFormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { Toast } from '../../lib/toast/toast.state';
 import { IViewMode } from '../../models/viewmode.model';
-/* STANDALONE */
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MdInputModule } from '../../lib/mdinput/mdinput.module';
-/* ENDSTANDALONE */
-
 
 @Component({
     _selector_
     templateUrl: './viewpath.html',
     changeDetection: ChangeDetectionStrategy.OnPush
-	 /* STANDALONE */
-	 , standalone: true
-	 , imports: [CommonModule, RouterModule, ReactiveFormsModule, MdInputModule]
-	 /* ENDSTANDALONE */
+    , standalone: true
+    , imports: [CommonModule, RouterModule, MdInputModule]
 })
-export class MajorNamePartialComponent implements OnInit {
+export class MajorNameFormPartial implements OnInit {
 
     // Add types
     @Input() mode: IViewMode = {forNew: true};

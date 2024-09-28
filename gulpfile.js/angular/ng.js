@@ -14,69 +14,79 @@ const gulpif = require('gulp-if');
 const angularTemplates = '/angulartemplates/';
 
 let options = require('../config.json');
-// TODO: remove barrels, they dont make sense
-
-let ngConfig = {};
+let appPath = options.ng.appPath;
+const ngConfig = {
+    Templates: {
+        Components: __dirname + angularTemplates + 'component.template',
+        DialogComponents: __dirname + angularTemplates + 'component.dialog.template',
+        FormComponents: __dirname + angularTemplates + 'component.form.template',
+        PartialComponents: __dirname + angularTemplates + 'component.partial.template',
+        Views: __dirname + angularTemplates + 'view.template',
+        PartialViews: __dirname + angularTemplates + 'view.partial.template',
+        FormViews: __dirname + angularTemplates + 'view.form.template',
+        Directives: __dirname + angularTemplates + 'directive.standalone.template',
+        Pipes: __dirname + angularTemplates + 'pipe.standalone.template',
+        Route: __dirname + angularTemplates + 'route.template',
+        RouteModule: __dirname + angularTemplates + 'routeModule.template',
+        RouteStandalone: __dirname + angularTemplates + 'route.standalone.template',
+        Declaration: 'MajorNamePartialComponent',
+        Module: __dirname + angularTemplates + 'module.template',
+        Model: __dirname + angularTemplates + 'model.template',
+        Service: __dirname + angularTemplates + 'service.template',
+        ApiConfig: __dirname + angularTemplates + 'config.template'
+    },
+    Destinations: {
+        Components: appPath + 'components/',
+        Views: appPath + 'components/',
+        Directives: appPath + 'lib/directives/',
+        Pipes: appPath + 'lib/pipes/',
+        Routes: appPath + 'routes/',
+        Models: appPath + 'models/',
+        Services: appPath + 'services/',
+        ApiConfig: appPath + ''
+    },
+    Core: {
+        ApiConfigFile: appPath + 'config.ts'
+    }
+};
 
 const setConfig = (config) => {
     options = { ...config };
 
     const appPath = options.ng.appPath;
 
-    ngConfig = {
-        Templates: {
-            Components: __dirname + angularTemplates + 'component.template',
-            FormComponents: __dirname + angularTemplates + 'component.form.template',
-            Views: __dirname + angularTemplates + 'view.template',
-            PartialViews: __dirname + angularTemplates + 'view.partial.template',
-            FormViews: __dirname + angularTemplates + 'view.form.template',
-            Directives: __dirname + angularTemplates + 'directive.standalone.template',
-            Pipes: __dirname + angularTemplates + 'pipe.standalone.template',
-            Route: __dirname + angularTemplates + 'route.template',
-            RouteModule: __dirname + angularTemplates + 'routeModule.template',
-            RouteStandalone: __dirname + angularTemplates + 'route.standalone.template',
-            Declaration: 'MajorNamePartialComponent',
-            Module: __dirname + angularTemplates + 'module.template',
-            Model: __dirname + angularTemplates + 'model.template',
-            Service: __dirname + angularTemplates + 'service.template',
-            ApiConfig: __dirname + angularTemplates + 'config.template'
-        },
-        Destinations: {
-            Components: appPath + 'components/',
-            Views: appPath + 'components/',
-            Directives: appPath + 'lib/directives/',
-            Pipes: appPath + 'lib/pipes/',
-            Routes: appPath + 'routes/',
-            Models: appPath + 'models/',
-            Services: appPath + 'services/',
-            ApiConfig: appPath + ''
-        },
-        Core: {
-
-            ApiConfigFile: appPath + 'config.ts'
-        }
+    ngConfig.Destinations = {
+        Components: appPath + 'components/',
+        Views: appPath + 'components/',
+        Directives: appPath + 'lib/directives/',
+        Pipes: appPath + 'lib/pipes/',
+        Routes: appPath + 'routes/',
+        Models: appPath + 'models/',
+        Services: appPath + 'services/',
+        ApiConfig: appPath + ''
     }
-
-
+    ngConfig.Core = {
+        ApiConfigFile: appPath + 'config.ts'
+    }
 };
 
 
-// FIXME: withroute means nothing now, it either is withroute, or standalone
-// or both, but never neither
 const _createRouteModule = function () {
-    let { major, standalone } = params;
+    let { major, standalone, ispartial, isdialog } = params;
 
     if (!major) {
         return gulp.src('.');
     }
 
+    if (ispartial || isdialog) {
+        return gulp.src('.');
+    }
     const majorName = major.substring(major.lastIndexOf('/') + 1);
     // if common or layouts, do not create module
     if (majorName === 'Common' || majorName === 'Layouts') {
         return gulp.src('.');
     }
     // avoid modules, keep adding to the same routemodule
-    // const src = withroute ? ngConfig.Templates.RouteModule : ngConfig.Templates.Module;	
     // problem: what kind of route should i create? if standalone create a standalone route
     // if route already exists add, but if new, choose according to first component created
     const src = standalone ? ngConfig.Templates.RouteStandalone : ngConfig.Templates.RouteModule;
@@ -86,7 +96,6 @@ const _createRouteModule = function () {
         .pipe(
             rename({
                 basename: majorName.toLowerCase(),
-                // suffix: withroute ? '.route' : '.module',
                 suffix: '.route',
                 extname: '.ts'
             })
@@ -98,8 +107,11 @@ const _createRouteModule = function () {
 const _addComponentToModule = function () {
     // Eylul 15, remove component barrels, now adding to module will add a normal import
     // if not standalone add to route or module:
-    const { major, name, ispartial, standalone } = params;
+    const { major, name, ispartial, isdialog, standalone } = params;
     if (!major) {
+        return gulp.src('.');
+    }
+    if (ispartial || isdialog) {
         return gulp.src('.');
     }
     // ComponentDestination_
@@ -135,7 +147,6 @@ const _addComponentToModule = function () {
 
     // place it inside the module, if **gulpcomponent_first exists, replace with  **gulpcomponent and dont add a comma
     // src from /routes folder, no subfolders
-    // const src = withroute ? '.route.ts' : '.module.ts'; // no more, if its shared, its standalone
     return (
         gulp
             .src(ngConfig.Destinations.Routes + majorName.toLowerCase() + '.route.ts')
@@ -155,8 +166,6 @@ const _addComponentToModule = function () {
     );
 };
 
-
-
 const _createView = function () {
     const { major, name, ispartial, isform, isdialog } = params;
     //major now is Something/Something' place in destinationviews + the path
@@ -167,7 +176,11 @@ const _createView = function () {
     const majorName = major.substring(major.lastIndexOf('/') + 1);
 
     // the view:
-    const theView = isform ? ngConfig.Templates.FormViews : (ispartial ? ngConfig.Templates.PartialViews : ngConfig.Templates.Views);
+    let theView = ngConfig.Templates.Views;
+    if (isform) theView = ngConfig.Templates.FormViews;
+    if (ispartial) theView = ngConfig.Templates.PartialViews;
+    if (isdialog) theView = ngConfig.Templates.PartialViews;
+    // const theView = isform ? ngConfig.Templates.FormViews : (ispartial ? ngConfig.Templates.PartialViews : ngConfig.Templates.Views);
     // new: isdialog make file name .dialog
     return gulp
         .src(theView)
@@ -185,44 +198,59 @@ const _createView = function () {
 
 const _createComponent = function () {
     const { major, name, ispartial, isform, standalone, isdialog } = params;
+    if (!major) {
+        return gulp.src('.');
+    }
+
+    // changed: partial form and dialog are always standalone
     const prefix = options.prefix;
 
     const re = /\/\* STANDALONE \*\/[\s\S]*?\/\* ENDSTANDALONE \*\//gim;
 
     const comments = /(\/\* STANDALONE \*\/\s\s*|\/\* ENDSTANDALONE \*\/\s\s*)/gim;
-    if (!major) {
-        return gulp.src('.');
-    }
     let _partialView = '';
     let _selector = '';
+    let _suffix = '.component';
+    let _letstandaoen = standalone;
     let majorName = major.substring(major.lastIndexOf('/') + 1);
     // if common, or layout dont include name
     if (majorName === 'Common' || majorName === 'Layouts') {
         majorName = '';
     }
     if (ispartial) {
+        _letstandaoen = true;
         // dialog is always partial
-        _partialView = isdialog ? '.dialog' : '.partial';
-        if (!isdialog) {
-            _selector = `selector: '${prefix}${majorName ? '-' + majorName.toLowerCase() : ''}-${name.toLowerCase()}',`;
-        }
+        _partialView =  '.partial';
+        _suffix = '.partial';
+        _selector = `selector: '${prefix}${majorName ? '-' + majorName.toLowerCase() : ''}-${name.toLowerCase()}',`;
     }
+
+    if (isdialog) {
+        _letstandaoen = true;
+        _partialView =  '.dialog';
+        _suffix = '.dialog';
+    }
+    let theSrc = ngConfig.Templates.Components;
+    if (isform) theSrc = ngConfig.Templates.FormComponents;
+    if (ispartial) theSrc = ngConfig.Templates.PartialComponents;
+    if (isdialog) theSrc = ngConfig.Templates.DialogComponents;
+
     return gulp
-        .src(isform ? ngConfig.Templates.FormComponents : ngConfig.Templates.Components)
+        .src(theSrc)
         .pipe(replace('Major', majorName))
         .pipe(replace('Name', name))
         .pipe(replace('major', majorName.toLowerCase()))
-        .pipe(gulpif(!ispartial, replace('Partial', '')))
-        .pipe(gulpif(isdialog, replace('Partial', 'Dialog')))
+        // .pipe(gulpif(!ispartial, replace('Partial', '')))
+        // .pipe(gulpif(isdialog, replace('Partial', 'Dialog')))
         .pipe(replace('viewpath', name.toLowerCase() + _partialView))
         .pipe(replace('_selector_', _selector))
-        .pipe(gulpif(!standalone, replace(re, '')))
+        .pipe(gulpif(!_letstandaoen, replace(re, '')))
         // remove comments
         .pipe(replace(comments, ''))
         .pipe(
             rename({
                 basename: name.toLowerCase(),
-                suffix: isdialog ? '.dialog' : (ispartial ? '.partial' : '.component'),
+                suffix: _suffix,
                 extname: '.ts'
             })
         )
@@ -337,13 +365,6 @@ module.exports = (config) => {
     setConfig(config);
 
     const ret = {};
-
-    // i am retiring these too, no need
-    // ret.injectServices = _injectServices;
-    // ret.injectLibModule = _injectLibModule;
-    // ret.injectModels = _injectModels;
-
-    // ret.injectAll = gulp.parallel(gulp.series(_injectModels, _injectServices), _injectLibModule,);
 
 
     ret.createRouteModule = _createRouteModule; // create a module with routing

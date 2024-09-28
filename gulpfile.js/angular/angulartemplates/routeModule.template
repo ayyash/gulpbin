@@ -9,9 +9,9 @@ const routes: Routes = [
 
 @NgModule({
     imports: [
-		  // **gulpcomponent_standalone**
+		// **gulpcomponent_standalone**
         RouterModule.forChild(routes),
-		  CommonModule
+		CommonModule
     ],
     declarations: [
          // **gulpcomponent_first**
