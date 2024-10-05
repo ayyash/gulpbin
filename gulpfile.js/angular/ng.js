@@ -178,7 +178,7 @@ const _createView = function () {
     // the view:
     let theView = ngConfig.Templates.Views;
     if (isform) theView = ngConfig.Templates.FormViews;
-    if (ispartial) theView = ngConfig.Templates.PartialViews;
+    if (ispartial && !isform) theView = ngConfig.Templates.PartialViews;
     if (isdialog) theView = ngConfig.Templates.PartialViews;
     // const theView = isform ? ngConfig.Templates.FormViews : (ispartial ? ngConfig.Templates.PartialViews : ngConfig.Templates.Views);
     // new: isdialog make file name .dialog
@@ -232,7 +232,7 @@ const _createComponent = function () {
     }
     let theSrc = ngConfig.Templates.Components;
     if (isform) theSrc = ngConfig.Templates.FormComponents;
-    if (ispartial) theSrc = ngConfig.Templates.PartialComponents;
+    if (ispartial && !isform) theSrc = ngConfig.Templates.PartialComponents;
     if (isdialog) theSrc = ngConfig.Templates.DialogComponents;
 
     return gulp
