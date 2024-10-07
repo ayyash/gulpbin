@@ -284,10 +284,9 @@ const _createDirective = function () {
         return gulp.src('.');
     }
 
-    // prefix directive with prefix
     return gulp
         .src(ngConfig.Templates.Directives)
-        .pipe(replace('_Name_', prefix + name))
+        .pipe(replace('_Name_', name))
         .pipe(replace('_name_', name.toLowerCase()))
         .pipe(
             rename({
