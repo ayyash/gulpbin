@@ -8,73 +8,73 @@ let options = require('../config.json');
 
 
 const _prepvars = function () {
-	const {iconfontsPath, srcPath} = options;
+    const { iconfontsPath, srcPath } = options;
 
-	return gulp.src([iconfontsPath + 'variables.less', iconfontsPath + 'selection.json'])
-		.pipe(gulp.dest(srcPath + 'dummy'));
+    return gulp.src([iconfontsPath + 'variables.less', iconfontsPath + 'selection.json'])
+        .pipe(gulp.dest(srcPath + 'dummy'));
 };
 const _prepfonts = function () {
-	const {iconfontsPath, distPath} = options;
+    const { iconfontsPath, distPath } = options;
 
 
-	return gulp.src([iconfontsPath + 'fonts/*'])
-		.pipe(gulp.dest(distPath + 'fonts'));
+    return gulp.src([iconfontsPath + 'fonts/*'], { encoding: false })
+        .pipe(gulp.dest(distPath + 'fonts'));
 }
 
 
 
 let liIconStr = "";
 const _getLigas = function () {
-	// TODO: test when task is not running from root (gulp by default runs from root unless --gulpfile is specified)
-	// console.log('relative', path.relative( process.cwd(), `${options.srcPath}dummy/`));
+    // TODO: test when task is not running from root (gulp by default runs from root unless --gulpfile is specified)
+    // console.log('relative', path.relative( process.cwd(), `${options.srcPath}dummy/`));
 
-	var icons = require(`${process.cwd()}/${options.srcPath}dummy/selection.json`).icons;
+    var icons = require(`${process.cwd()}/${options.srcPath}dummy/selection.json`).icons;
 
-	let array = {};
-	for (a of icons) {
-		array[a.properties.name] = a.properties.ligatures;
+    let array = {};
+    for (a of icons) {
+        array[a.properties.name] = a.properties.ligatures;
 
-	}
-	return array;
+    }
+    return array;
 
 };
 
 
 const _cssicons = function () {
 
-	let returnStr = "";
-	const ligas = _getLigas();
-	const {srcPath} = options;
+    let returnStr = "";
+    const ligas = _getLigas();
+    const { srcPath } = options;
 
-	return gulp.src(srcPath + 'less/ui.icons.less')
-		.pipe(inject(
-			gulp.src(srcPath + 'dummy/variables.less'),
-			{
-				starttag: '// inject:icons', endtag: '// endinject',
-				transform: function (filePath, file) {
-					// for ever @icon-arrow-all: "\e900"; generate @icon-arrow-all: "\e900";    .icon(icon-arrow-all, @icon-arrow-all);
-					var lines = file.contents.toString('utf8').split('\n');
-					lines.forEach(function (value) {
-						if (value.indexOf('@icon-') > -1) {
-							// add to the line icon(something, icon);
-							const name = value.split(":")[0];
-							value += "	.icon({0},{1});\r\n"
-								.replace("{0}", name.substring(1))
-								.replace("{1}", name);
+    return gulp.src(srcPath + 'less/ui.icons.less')
+        .pipe(inject(
+            gulp.src(srcPath + 'dummy/variables.less'),
+            {
+                starttag: '// inject:icons', endtag: '// endinject',
+                transform: function (filePath, file) {
+                    // for ever @icon-arrow-all: "\e900"; generate @icon-arrow-all: "\e900";    .icon(icon-arrow-all, @icon-arrow-all);
+                    var lines = file.contents.toString('utf8').split('\n');
+                    lines.forEach(function (value) {
+                        if (value.indexOf('@icon-') > -1) {
+                            // add to the line icon(something, icon);
+                            const name = value.split(":")[0];
+                            value += "	.icon({0},{1});\r\n"
+                                .replace("{0}", name.substring(1))
+                                .replace("{1}", name);
 
-							returnStr += value;
+                            returnStr += value;
 
-							liIconStr += '<li><span class="symbol {0}">{1}</span> <i>{2}</i></li>'
-								.replace("{0}", name.substring(1))
-								.replace("{1}", name)
-								.replace("{2}", ligas[name.substring(6)]);
-						}
-					})
-					return returnStr;
-				}
-			}
-		))
-		.pipe(gulp.dest(srcPath + 'less/'));
+                            liIconStr += '<li><span class="symbol {0}">{1}</span> <i>{2}</i></li>'
+                                .replace("{0}", name.substring(1))
+                                .replace("{1}", name)
+                                .replace("{2}", ligas[name.substring(6)]);
+                        }
+                    })
+                    return returnStr;
+                }
+            }
+        ))
+        .pipe(gulp.dest(srcPath + 'less/'));
 
 
 
@@ -82,30 +82,30 @@ const _cssicons = function () {
 
 const _writeHtml = function () {
 
-	const {srcPath} = options;
-	return gulp.src(srcPath + 'dummy/iconset.html')
-		.pipe(inject(
-			gulp.src(srcPath + 'dummy/variables.less', { read: false }),
-			{
-				starttag: '<!-- inject:icons -->', endtag: '<!-- endinject -->',
-				transform: function (filePath, file) {
-					//just inject text as is
-					return liIconStr;
-				}
-			}
-		))
-		.pipe(gulp.dest(srcPath + 'dummy/'));
+    const { srcPath } = options;
+    return gulp.src(srcPath + 'dummy/iconset.html')
+        .pipe(inject(
+            gulp.src(srcPath + 'dummy/variables.less', { read: false }),
+            {
+                starttag: '<!-- inject:icons -->', endtag: '<!-- endinject -->',
+                transform: function (filePath, file) {
+                    //just inject text as is
+                    return liIconStr;
+                }
+            }
+        ))
+        .pipe(gulp.dest(srcPath + 'dummy/'));
 };
 
 
 
 
 module.exports = function (config) {
-	options = {...config.assets};
-	
-	const prepicons = gulp.parallel(_prepfonts, _prepvars);
-	const cssicons = gulp.series(_cssicons, _writeHtml);
+    options = { ...config.assets };
 
-	return gulp.series(prepicons, cssicons);
+    const prepicons = gulp.parallel(_prepfonts, _prepvars);
+    const cssicons = gulp.series(_cssicons, _writeHtml);
+
+    return gulp.series(prepicons, cssicons);
 
 }
