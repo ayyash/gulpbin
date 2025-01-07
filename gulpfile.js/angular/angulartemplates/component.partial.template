@@ -9,7 +9,6 @@ import { RouterModule } from '@angular/router';
     templateUrl: './viewpath.html'
     , changeDetection: ChangeDetectionStrategy.OnPush
     /* STANDALONE */
-    , standalone: true
     , imports: [CommonModule, RouterModule]
     /* ENDSTANDALONE */
 })

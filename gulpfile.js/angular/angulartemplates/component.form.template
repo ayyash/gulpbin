@@ -1,17 +1,16 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { Toast } from '../../lib/toast/toast.state';
 import { IViewMode } from '../../models/viewmode.model';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { MdInputModule } from '../../lib/mdinput/mdinput.module';
+import { InputComponent } from '../../lib/input/input.const';
 
 @Component({
     _selector_
     templateUrl: './viewpath.html',
     changeDetection: ChangeDetectionStrategy.OnPush
-    , standalone: true
-    , imports: [CommonModule, RouterModule, MdInputModule]
+    , imports: [CommonModule, RouterModule, ReactiveFormsModule, ...InputComponent]
 })
 export class MajorNameFormPartial implements OnInit {
 
@@ -21,10 +20,9 @@ export class MajorNameFormPartial implements OnInit {
     @Output() onSave: EventEmitter<any> = new EventEmitter<any>();
     @Output() onCancel: EventEmitter<void> = new EventEmitter();
 
-    forceValidation = false;
-    majorForm: UntypedFormGroup;
+    majorForm: FormGroup;
 
-    constructor(private fb: UntypedFormBuilder, private toast: Toast) {
+    constructor(private fb: FormBuilder, private toast: Toast) {
         //
     }
     ngOnInit(): void {
@@ -45,7 +43,6 @@ export class MajorNameFormPartial implements OnInit {
     }
 
     saveMajor(): void {
-        this.forceValidation = false;
         this.toast.Hide();
 
 
@@ -58,7 +55,6 @@ export class MajorNameFormPartial implements OnInit {
             // then emit
             this.onSave.emit(_major);
         } else {
-            this.forceValidation = true;
             this.toast.ShowError('INVALID_FORM');
         }
     }

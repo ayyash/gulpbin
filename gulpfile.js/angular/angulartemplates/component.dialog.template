@@ -7,7 +7,6 @@ import { DialogPartial } from '../../lib/dialog/partial';
 @Component({
     templateUrl: './viewpath.html'
     , changeDetection: ChangeDetectionStrategy.OnPush
-    , standalone: true
     , imports: [CommonModule, RouterModule]
 })
 export class MajorNameDialog implements OnInit {
