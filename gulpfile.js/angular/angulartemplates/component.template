@@ -1,19 +1,15 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
-/* STANDALONE */
+import { Component, OnInit, ChangeDetectionStrategy, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-/* ENDSTANDALONE */
 
 @Component({
     templateUrl: './viewpath.html'
     , changeDetection: ChangeDetectionStrategy.OnPush
-    /* STANDALONE */
     , imports: [CommonModule, RouterModule]
-    /* ENDSTANDALONE */
 })
 export class MajorNameComponent implements OnInit {
 
-    @Input() id: string;
+    mode = input<string>(); // param
 
     constructor() {
         //

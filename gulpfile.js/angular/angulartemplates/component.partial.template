@@ -1,26 +1,21 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
-/* STANDALONE */
 import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component, input, output, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
-/* ENDSTANDALONE */
-
 @Component({
     _selector_
     templateUrl: './viewpath.html'
     , changeDetection: ChangeDetectionStrategy.OnPush
-    /* STANDALONE */
     , imports: [CommonModule, RouterModule]
-    /* ENDSTANDALONE */
-})
-export class MajorNamePartial implements OnInit {
+    })
+export class ProofCardPartial implements OnInit {
 
-    @Input() id: string;
-    @Output() onSomething: EventEmitter<any> = new EventEmitter();
+    id = input.required<string>();
+    onSomething = output<any>();
 
     constructor() {
         //
     }
     ngOnInit(): void {
         //
-    }	
+    }
 }

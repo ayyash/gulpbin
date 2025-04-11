@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, OnInit, output } from '@angular/core';
 import { FormGroup, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { Toast } from '../../lib/toast/toast.state';
 import { IViewMode } from '../../models/viewmode.model';
@@ -15,10 +15,9 @@ import { InputComponent } from '../../lib/input/input.const';
 export class MajorNameFormPartial implements OnInit {
 
     // Add types
-    @Input() mode: IViewMode = {forNew: true};
+    mode = input<IViewMode>({ forNew: true });
+    onSave = output<any>();
 
-    @Output() onSave: EventEmitter<any> = new EventEmitter<any>();
-    @Output() onCancel: EventEmitter<void> = new EventEmitter();
 
     majorForm: FormGroup;
 
