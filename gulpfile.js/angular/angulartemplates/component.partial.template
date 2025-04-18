@@ -7,7 +7,7 @@ import { RouterModule } from '@angular/router';
     , changeDetection: ChangeDetectionStrategy.OnPush
     , imports: [CommonModule, RouterModule]
     })
-export class ProofCardPartial implements OnInit {
+export class MajorNamePartial implements OnInit {
 
     id = input.required<string>();
     onSomething = output<any>();
