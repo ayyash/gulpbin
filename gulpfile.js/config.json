@@ -13,7 +13,8 @@
 		]
 	},
 	"ng": {
-		"appPath": "./src/app/"
+    "appPath": "./src/app/",
+    "templates": "/angulartemplates/"
 	},
 	"extract": {
 		"scan": "./src/app/components",

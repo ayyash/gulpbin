@@ -1,0 +1,17 @@
+import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
+// **gulpimport**
+
+@NgModule({
+    imports: [
+        RouterModule
+    ],
+    declarations: [
+         // **gulpcomponent_first**
+    ],
+    exports: [
+        // **gulpcomponent_first**
+    ]
+})
+
+export class MajorModule { }

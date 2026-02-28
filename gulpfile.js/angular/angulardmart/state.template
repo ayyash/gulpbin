@@ -1,0 +1,10 @@
+import { Injectable } from '@angular/core';
+import { I_Name_ } from './_name_.model';
+import { ListStateService } from 'src/app/utils/state.abstract';
+
+@Injectable({providedIn: 'root'})
+export class _Name_ListState extends ListStateService<I_Name_>{
+  constructor() {
+    super();
+  }
+}

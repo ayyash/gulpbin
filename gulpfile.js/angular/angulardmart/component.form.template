@@ -4,13 +4,14 @@ import { Toast } from '../../lib/toast/toast.state';
 import { IViewMode } from '../../models/viewmode.model';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { InputComponent } from '../../lib/input/input.const';
+import { InputDirective } from 'src/app/lib/input/input.directive';
+import { OlInputPartial } from 'src/app/lib/input/input.partial';
 
 @Component({
     _selector_
     templateUrl: './viewpath.html',
     changeDetection: ChangeDetectionStrategy.OnPush
-    , imports: [CommonModule, RouterModule, ReactiveFormsModule, ...InputComponent]
+    , imports: [CommonModule, RouterModule, ReactiveFormsModule, OlInputPartial, InputDirective]
 })
 export class MajorNameFormPartial implements OnInit {
 

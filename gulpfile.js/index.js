@@ -4,7 +4,8 @@ const ng = require('./angular/ng');
 const extract = require('./angular/extract');
 const locales = require('./angular/locales');
 
-const svelteExtract = require('./svelte/extract');
+// const svelteExtract = require('./svelte/extract');
+const svelteExtract = require('./svelte/translate');
 
 const assets = require('./shut/assets');
 const icons = require('./shut/icons');

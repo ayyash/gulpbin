@@ -1,24 +1,24 @@
 <form [formGroup]="majorForm" (ngSubmit)="saveMajor()" >
 
   <div class="spaced">
-    <cr-input placeholder="Name">
+    <ol-input placeholder="Name">
       <input
           type="text"
           id="name"
           class="w100"
-          crinput
+          olinput
           formControlName="name"
           [required]="true"
       />
       <ng-container helptext>help text</ng-container>
-    </cr-input>
+    </ol-input>
   </div>
 
   <div class="spaced">
-    <cr-input placeholder="Currency">
+    <ol-input placeholder="Currency">
       <select
         formControlName="currency"
-        crinput
+        olinput
         class="w100"
         [required]="true"
         [compareWith]="compareFn"
@@ -27,20 +27,20 @@
         <option [value]="currency">{{ currency }}</option>
         }
       </select>
-    </cr-input>
+    </ol-input>
   </div>
 
   <div class="spaced">
 
-    <cr-input placeholder="Notes">
+    <ol-input placeholder="Notes">
       <textarea
           type="text"
           id="notes"
           class="w100 h2"
-          crinput
+          olinput
           formControlName="notes"
       ></textarea>
-    </cr-input>	
+    </ol-input>	
   </div>
 
   <button class="btn-rev" type="submit" >Save</button>

@@ -1,0 +1,6 @@
+import { Routes } from '@angular/router';
+// **gulpimport**
+
+export const MajorRoutes: Routes = [
+  // **gulproute_first**
+];

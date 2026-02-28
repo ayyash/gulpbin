@@ -1,0 +1,7 @@
+_name_: {
+    list: '/_name_s/?:options',
+    details: '/_name_s/:id',
+    create: '/_name_s', // POST
+    save: '/_name_s/:id', // PUT
+    delete: '/_name_s/:id', // DELETE
+}

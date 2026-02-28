@@ -89,6 +89,7 @@ const extractFunction = function (options, lang) {
   }
 }
 
+
 module.exports = (options) => {
 
   const allMissingFiles = options.languages.map(language => missingFile(options, language));

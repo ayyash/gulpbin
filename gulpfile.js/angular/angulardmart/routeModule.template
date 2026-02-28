@@ -1,0 +1,21 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Routes, RouterModule } from '@angular/router';
+// **gulpimport**
+
+const routes: Routes = [
+   // **gulproute_first**
+];
+
+@NgModule({
+    imports: [
+		// **gulpcomponent_standalone**
+        RouterModule.forChild(routes),
+		CommonModule
+    ],
+    declarations: [
+         // **gulpcomponent_first**
+    ]
+})
+
+export class MajorRoutingModule { }

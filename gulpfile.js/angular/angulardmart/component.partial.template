@@ -1,24 +1,21 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { DialogPartial } from '../../lib/dialog/partial';
-
-
 @Component({
     _selector_
     templateUrl: './viewpath.html'
     , changeDetection: ChangeDetectionStrategy.OnPush
     , imports: [CommonModule, RouterModule]
-})
-export class MajorNameDialog implements OnInit {
+    })
+export class MajorNamePartial implements OnInit {
 
-    data!: any;
-    dialog!: DialogPartial;
-    
+    id = input.required<string>();
+    onSomething = output<any>();
+
     constructor() {
         //
     }
     ngOnInit(): void {
         //
-    }	
+    }
 }

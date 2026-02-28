@@ -1,0 +1,53 @@
+import { IResource, Resource } from 'src/app/models/resource.model';
+import { EnumContentType, EnumRequestType } from 'src/app/utils/param.model';
+import { Config } from 'src/app/config';
+
+export interface I_Name_ extends IResource {
+  custom?: any;
+}
+
+export class _Name_  {
+	
+	static NewInstance(_name_: any): I_Name_ {	
+    const res = Resource.NewInstance(_name_, Config.API.rootSpace);
+		return {
+			...res,
+      custom: _name_.custom
+		}
+	}
+	static NewInstances(data: any[]): I_Name_[] {
+    if (!data?.length) return [];
+		return data.map(_Name_.NewInstance);
+	}
+
+  static PrepPost(data: I_Name_): any {
+
+    const payload = {
+      payload: {
+        content_type: EnumContentType.json,
+        // optional schema_shortname: '_name_',
+        body: {
+          // add body
+          custom: data.custom
+        },
+      }
+    };
+
+    const ret = Resource.PrepPayload(data, payload);
+
+    return {
+      ...ret,
+      shortname: data.shortname || Config.API.autoShortname,
+      subpath: Config.API._name_.list,
+    };
+  }
+
+  static PrepRequest(_name_: I_Name_, request: EnumRequestType): any {
+    return {
+      space_name: Config.API.rootSpace,
+      request_type: request,
+      records: [this.PrepPost(_name_)],
+    };
+  }
+
+}

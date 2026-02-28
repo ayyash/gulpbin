@@ -1,0 +1,65 @@
+import { inject, Injectable } from '@angular/core';
+import { Config } from 'src/app/config';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { EnumQueryType, EnumRequestType, EnumResourceType, IParam, Param } from 'src/app/utils/param.model';
+import { mapRecords, mapResponse } from 'src/app/models/response.model';
+import {  I_Name_, _Name_, } from './_name_.model';
+
+
+@Injectable({providedIn: 'root'})
+export class _Name_Service {
+
+    private http =inject(HttpClient); 
+    
+    
+    Get_Name_s(options: IParam = {}): Observable<I_Name_[]> {
+      const _options: IParam = {
+        type: EnumQueryType.search,
+        forTypes: [EnumResourceType.content],
+        space: Config.API.rootSpace,
+        subpath: Config.API._name_.list,
+        size: 100,
+        withPayload: true,
+      };
+      const params = Param.MapQueryParams(_options);
+
+      return this.http.post(Config.API.resource.query, params).pipe(
+        map(response => {
+          return _Name_.NewInstances(mapRecords(response));
+        })
+      );
+    }
+
+    Create_Name_(_name_: I_Name_): Observable<I_Name_> {
+
+      
+      const data = _Name_.PrepRequest(_name_, EnumRequestType.create);
+      return this.http.post(Config.API.resource.request, data).pipe(
+        map(response => {
+          return _Name_.NewInstance(mapResponse(response));
+        })
+      );
+    }
+
+    Save_Name_(_name_: I_Name_): Observable<I_Name_> {
+      const data = _Name_.PrepRequest(_name_, EnumRequestType.update);
+      return this.http.post(Config.API.resource.request, data).pipe(
+        map(_ => {
+          return _name_;
+        })
+      );
+      
+    }
+
+    Delete_Name_(_name_: I_Name_): Observable<boolean> {
+      const data = _Name_.PrepRequest(_name_, EnumRequestType.delete);
+      return this.http.post(Config.API.resource.request, data).pipe(
+        map(_ => {
+          return true;
+        })
+      );
+    }
+
+}
